@@ -33,10 +33,12 @@
     "@types/react-router-dom": "^5.3.3",
     "@types/styled-components": "^5.1.36",
     "@vitejs/plugin-react-swc": "^4.2.2",
+    "autoprefixer": "^10.4.27",
     "commitizen": "^4.3.1",
     "cross-env": "^10.1.0",
     "husky": "^9.1.7",
     "inquirer": "9",
+    "postcss": "^8.5.8",
     "styled-components": "^6.3.12",
     "typescript": "~5.9.3",
     "vite": "^7.3.1"
