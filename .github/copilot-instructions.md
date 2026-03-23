@@ -8,6 +8,65 @@ yarn build && yarn preview  # 프로덕션 미리보기
 yarn commit           # 대화형 커밋 (commitizen)
 ```
 
+## 프로젝트 셋업
+
+### 기술 스택
+
+| 분류     | 라이브러리        | 버전 |
+| -------- | ----------------- | ---- |
+| UI       | React             | ^19  |
+| 언어     | TypeScript        | ~5.9 |
+| 번들러   | Vite              | ^7   |
+| 서버     | Express           | ^5   |
+| 라우터   | React Router DOM  | ^7   |
+| 스타일   | Tailwind CSS      | ^4   |
+| 스타일   | styled-components | ^6   |
+| 상태관리 | Zustand           | ^5   |
+
+### 프로젝트 구조
+
+```
+src/
+├── entry-client.tsx   # 클라이언트 엔트리 (hydrateRoot)
+├── entry-server.tsx   # 서버 엔트리 (renderToPipeableStream)
+├── assets/            # 정적 자산
+├── components/        # 공통 컴포넌트
+├── lib/               # 공유 라이브러리 (기존 구현 우선 사용)
+├── pages/             # 페이지 컴포넌트
+│   ├── Router.tsx     # 라우트 정의
+│   ├── Home.tsx
+│   ├── Driver.tsx
+│   ├── Passenger.tsx
+│   └── NotFound.tsx
+└── utils/             # 범용 유틸리티
+```
+
+### 라우트 구조
+
+| 경로         | 컴포넌트    |
+| ------------ | ----------- |
+| `/`          | `Home`      |
+| `/driver`    | `Driver`    |
+| `/passenger` | `Passenger` |
+| `*`          | `NotFound`  |
+
+### SSR 아키텍처
+
+- **서버**: `server.js` (Express) → `entry-server.tsx`의 `render()` 호출 → `renderToPipeableStream` + `StaticRouter`
+- **클라이언트**: `entry-client.tsx` → `hydrateRoot` + `BrowserRouter`
+- 브라우저 전용 API는 반드시 `typeof window !== "undefined"` 검사 필수
+
+### TypeScript 설정
+
+- `strict: true` — 엄격 모드 활성화
+- `noUnusedLocals` / `noUnusedParameters: true` — 미사용 변수/파라미터 오류
+- Path alias: `@/` → `src/` (절대 경로 import 사용)
+
+### 개발 환경
+
+- GitHub Codespaces 환경: HMR WebSocket은 HTTPS 포트(443)를 통해 통신
+- 포트: 5173 (고정)
+
 ## 코드 규칙
 
 ### 길이 규칙
