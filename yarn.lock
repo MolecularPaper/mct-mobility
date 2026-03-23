@@ -3002,6 +3002,11 @@ vary@^1.1.2, vary@~1.1.2:
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==
 
+vite-plugin-react-click-to-component@^4.2.1:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/vite-plugin-react-click-to-component/-/vite-plugin-react-click-to-component-4.2.1.tgz#f4be52e4df551377470769b7f3205e9143beaa3c"
+  integrity sha512-41zpxjc1PrYrKHKYU9csvfmVIq3QGEbwC9slFMbFqAhuhPLiGINKH7In/xf3k7ZK2uC71o80nRIqbVZ5WrBvvQ==
+
 vite@^7.3.1:
   version "7.3.1"
   resolved "https://registry.yarnpkg.com/vite/-/vite-7.3.1.tgz#7f6cfe8fb9074138605e822a75d9d30b814d6507"
