@@ -9,7 +9,7 @@ import Account from "@/widget/Account/Account";
 import NotFound from "./NotFound";
 import Home from "./Home";
 import Driver from "./Driver";
-import Passenger from "./Passenger";
+import Passenger from "./Passenger/Passenger";
 
 export default function Router() {
   const isLogin = useUser((state) => state.isLogin);
