@@ -1,4 +1,5 @@
 //승객용 페이지
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import TiketCard from "./Tiket";
@@ -23,6 +24,8 @@ const MOCK_RIDES: Tiket[] = Array.from({ length: 8 }, (_, i) => ({
  * 경로/시간 입력 폼과 카풀 목록을 표시한다.
  */
 function PassengerList() {
+  const [departureTime, setDepartureTime] = useState("2026-03-24T04:00");
+
   return (
     <div className="mx-auto flex min-h-screen flex-col gap-6 p-6">
       <div className="flex flex-row">
@@ -34,9 +37,8 @@ function PassengerList() {
         </Link>
       </div>
 
-      {/* 경로 입력 */}
       <section className="flex flex-col gap-2">
-        <h2 className="text-lg font-bold text-neutral-900">경로</h2>
+        <h2 className="text-lg font-bold text-neutral-900">경로와 시간</h2>
         <input
           type="text"
           placeholder="출발지를 입력해주세요"
@@ -47,33 +49,15 @@ function PassengerList() {
           placeholder="도착지를 입력해주세요"
           className="rounded border border-gray-400 px-3 py-2 text-sm"
         />
-      </section>
-
-      {/* 시간 선택 */}
-      <section className="flex flex-col gap-2">
-        <h2 className="text-lg font-bold text-neutral-900">시간</h2>
-        <div className="flex gap-3">
-          <input
-            type="text"
-            placeholder="연도"
-            className="flex-1 rounded border border-gray-400 px-3 py-2 text-center text-sm"
-          />
-          <input
-            type="text"
-            placeholder="월"
-            className="flex-1 rounded border border-gray-400 px-3 py-2 text-center text-sm"
-          />
-          <input
-            type="text"
-            placeholder="일"
-            className="flex-1 rounded border border-gray-400 px-3 py-2 text-center text-sm"
-          />
-          <input
-            type="text"
-            placeholder="시간"
-            className="flex-1 rounded border border-gray-400 px-3 py-2 text-center text-sm"
-          />
-        </div>
+        <input
+          type="datetime-local"
+          name="trip-start"
+          value={departureTime}
+          min="2026-01-01T00:00"
+          max="2026-12-31T23:59"
+          onChange={(e) => setDepartureTime(e.target.value)}
+          className="field-sizing-content flex-1 min-w-auto rounded border border-gray-400 px-3 py-2 text-center text-sm"
+        />
       </section>
 
       <div className="flex items-center border-b border-gray-300 pb-2 text-lg font-bold text-neutral-700">
