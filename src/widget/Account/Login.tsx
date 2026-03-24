@@ -16,20 +16,20 @@ export default function Login({ setActiveLoginPage }: AccountChildProps) {
 
   return (
     <div className="w-96 h-fit min-h-75 bg-white flex flex-col p-8">
-      <p className="self-center text-4xl">로그인</p>
+      <p className="self-center text-2xl">로그인</p>
       <Input
-        className="mt-8 text-2xl"
+        className="mt-8 text-[15px]"
         inputProps={{ className: "flex-1", placeholder: "아이디" }}
       />
       <Input
-        className="mt-6 text-2xl"
+        className="mt-6 text-[15px]"
         inputProps={{ className: "flex-1", placeholder: "비밀번호" }}
       />
-      <Button className="mt-6" onClick={RequestLogin}>
+      <Button className="mt-6 text-[14px]" onClick={RequestLogin}>
         로그인
       </Button>
       <button
-        className="cursor-pointer self-center mt-4 text-gray-500"
+        className="cursor-pointer self-center mt-4 text-[13px] text-gray-500"
         onClick={() => setActiveLoginPage(false)}>
         가입하기
       </button>
