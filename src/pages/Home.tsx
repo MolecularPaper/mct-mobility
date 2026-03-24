@@ -3,21 +3,13 @@ import { Link } from "react-router-dom";
 import driverPageImg from "@/assets/driver_page.png";
 import passengerPageImg from "@/assets/passenger_page.png";
 
-import { useUser } from "@/states/user";
-
-import Modal from "@/components/Modal";
-import Login from "@/widget/Account/Account";
-
 /**
  * 홈페이지 컴포넌트
  * 운전자/승객 페이지로 이동하는 분기 화면
  */
 export default function Home() {
-  const isLogin = useUser((state) => state.isLogin);
-
   return (
     <>
-      <Modal active={!isLogin} Child={Login} />
       <div className="flex flex-col h-screen overflow-hidden">
         {/* 상단 흰색 영역 */}
         <div
