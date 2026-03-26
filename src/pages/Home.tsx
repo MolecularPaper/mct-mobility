@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 import baner from "@/assets/baner.gif";
-import driverPageImg from "@/assets/driver_page.png";
+import road from "@/assets/road.svg";
 import passengerPageImg from "@/assets/passenger_page.png";
 
 /**
@@ -25,12 +25,12 @@ export default function Home() {
         <div className="flex flex-1">
           <Link
             to="/driver"
-            className="relative flex flex-1 items-center justify-center no-underline text-neutral-900 cursor-pointer bg-[#42c8f4] transition-[filter] duration-150 hover:brightness-[0.93]">
-            <div className="relative flex flex-1 items-center justify-center w-full p-6 self-stretch">
+            className="relative flex flex-1 items-center justify-center no-underline text-neutral-900 cursor-pointer transition-[filter] duration-150 hover:brightness-[0.93]">
+            <div className="relative flex flex-1 items-center justify-center w-full self-stretch">
               <img
-                src={driverPageImg}
+                src={road}
                 alt="운전자"
-                className="max-w-[80%] max-h-full object-contain"
+                className="absolute inset-0 w-full h-full object-cover"
               />
               <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[clamp(1.3rem,3.5vw,2rem)] font-black text-center leading-snug m-0 pointer-events-none whitespace-nowrap">
                 함께 타고 가요
