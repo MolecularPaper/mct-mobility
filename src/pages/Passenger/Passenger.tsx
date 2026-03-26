@@ -2,23 +2,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
+import { Tiket } from "@/states/tiket";
+
 import Button from "@/components/Button";
 import TiketCard from "./Tiket";
 
 import homeIcon from "@/assets/home.svg";
-
-/**
- * @param id            유저 아이디
- * @param departure     출발지
- * @param arrival       목적지
- * @param departureTime 출발시간
- */
-interface Tiket {
-  id: number;
-  departure: string;
-  arrival: string;
-  departureTime: string;
-}
 
 const MOCK_RIDES: Tiket[] = Array.from({ length: 8 }, (_, i) => ({
   id: i + 1,
