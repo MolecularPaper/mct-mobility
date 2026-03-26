@@ -1,12 +1,21 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
+import { Tiket } from "@/states/tiket";
 import Button from "@/components/Button";
+import TiketCard from "./Tiket";
 
 import homeIcon from "@/assets/home.svg";
 
 //운전자용 페이지
 interface PageDriverProps {}
+
+const MOCK_RIDES: Tiket[] = Array.from({ length: 2 }, (_, i) => ({
+  id: i + 1,
+  departure: "OO도 OO시 OOO구 OOO로",
+  arrival: "OO도 OO시 OOO구 OOO로",
+  departureTime: "13:00",
+}));
 
 export default function DriverList({}: PageDriverProps) {
   const [departureTime, setDepartureTime] = useState("2026-03-24T04:00");
@@ -52,14 +61,15 @@ export default function DriverList({}: PageDriverProps) {
       </div>
 
       <div className="flex flex-1 flex-col gap-3 overflow-y-auto">
-        {/* {MOCK_RIDES.map((ride) => (
+        {MOCK_RIDES.map((ride) => (
           <TiketCard
             key={ride.id}
             departure={ride.departure}
             arrival={ride.arrival}
             departureTime={ride.departureTime}
+            buttonText="삭제"
           />
-        ))} */}
+        ))}
       </div>
     </div>
   );
