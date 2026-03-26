@@ -24,7 +24,7 @@ function PassengerList() {
   const [departureTime, setDepartureTime] = useState("2026-03-24T04:00");
 
   return (
-    <div className="mx-auto flex h-screen flex-col gap-6 p-6">
+    <div className="mx-auto flex h-screen flex-col gap-6 p-6 bg-gray-50">
       <div className="flex flex-row">
         <h1 className="text-2xl font-black text-neutral-900 flex-1">
           이쪽으로 가요
@@ -39,12 +39,12 @@ function PassengerList() {
         <input
           type="text"
           placeholder="출발지를 입력해주세요"
-          className="rounded border border-gray-400 px-3 py-2 text-sm"
+          className="rounded-lg bg-gray-100 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-400"
         />
         <input
           type="text"
           placeholder="도착지를 입력해주세요"
-          className="rounded border border-gray-400 px-3 py-2 text-sm"
+          className="rounded-lg bg-gray-100 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-400"
         />
         <input
           type="datetime-local"
@@ -53,9 +53,11 @@ function PassengerList() {
           min="2026-01-01T00:00"
           max="2026-12-31T23:59"
           onChange={(e) => setDepartureTime(e.target.value)}
-          className="field-sizing-content flex-1 min-w-auto rounded border border-gray-400 px-3 py-2 text-center text-sm"
+          className="field-sizing-content flex-1 min-w-auto rounded-lg bg-gray-100 px-3 py-2 text-center text-sm outline-none focus:ring-2 focus:ring-blue-400"
         />
-        <Button className="bg-[#42c8f4] focus:bg-[#22a0cc]">검색</Button>
+        <Button className="rounded-xl bg-blue-400 border-none font-bold text-white hover:bg-blue-500 focus:bg-blue-500">
+          검색
+        </Button>
       </section>
 
       <div className="flex items-center border-b border-gray-300 pb-2 text-lg font-bold text-neutral-700">

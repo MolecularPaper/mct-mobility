@@ -11,7 +11,7 @@ export default function Account() {
   const [activeLoginPage, setActiveLoginPage] = useState(true);
 
   return (
-    <div className="w-screen h-screen flex justify-center items-center">
+    <div className="w-screen h-screen flex justify-center items-center bg-gray-50">
       {activeLoginPage ? (
         <Login setActiveLoginPage={setActiveLoginPage} />
       ) : (
