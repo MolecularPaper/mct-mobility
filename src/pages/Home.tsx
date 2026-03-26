@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 
+import baner from "@/assets/baner.gif";
 import driverPageImg from "@/assets/driver_page.png";
 import passengerPageImg from "@/assets/passenger_page.png";
 
@@ -11,24 +12,15 @@ export default function Home() {
   return (
     <>
       <div className="flex flex-col h-screen overflow-hidden">
-        {/* 상단 흰색 영역 */}
-        <div
-          className="relative flex flex-col items-center justify-center overflow-hidden bg-white"
-          style={{ flex: "0 0 38%" }}>
-          <h1 className="relative z-10 text-[clamp(2rem,6vw,3.5rem)] font-black text-neutral-900">
-            상승 카풀
-          </h1>
-          {/* 산 모양 장식 */}
-          <div
-            className="absolute -bottom-px left-1/2 -translate-x-1/2 bg-[#d6edf9]"
-            style={{
-              width: "70%",
-              aspectRatio: "2/1",
-              clipPath: "polygon(50% 0%, 100% 100%, 0% 100%)",
-            }}
+        <div className="w-full mt-8 flex justify-center">
+          <span className="text-6xl font-bold">상승 카풀</span>
+        </div>
+        <div className="w-full max-w-full mt-8 max-h-75 flex justify-center">
+          <img
+            src={baner}
+            className="w-auto h-full aspect-8/6 object-cover rounded-lg"
           />
         </div>
-
         {/* 하단 분기 영역 */}
         <div className="flex flex-1">
           <Link
