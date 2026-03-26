@@ -35,15 +35,9 @@ function PassengerList() {
       </div>
 
       <section className="flex flex-col gap-2">
-        <h2 className="text-lg font-bold text-neutral-900">경로와 시간</h2>
         <input
           type="text"
-          placeholder="출발지를 입력해주세요"
-          className="rounded-lg bg-gray-100 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-400"
-        />
-        <input
-          type="text"
-          placeholder="도착지를 입력해주세요"
+          placeholder="출발지 또는 도착지를 입력해주세요"
           className="rounded-lg bg-gray-100 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-400"
         />
         <input
