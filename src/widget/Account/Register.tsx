@@ -14,7 +14,7 @@ export default function Register({ setActiveLoginPage }: AccountChildProps) {
         inputProps={{
           className:
             "flex-1 rounded-lg bg-gray-100 px-3 py-2.5 outline-none focus:ring-2 focus:ring-blue-400",
-          placeholder: "아이디",
+          placeholder: "닉네임",
         }}
       />
       <Input
