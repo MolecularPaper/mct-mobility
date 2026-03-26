@@ -34,7 +34,7 @@ function PassengerList() {
   const [departureTime, setDepartureTime] = useState("2026-03-24T04:00");
 
   return (
-    <div className="mx-auto flex min-h-screen flex-col gap-6 p-6">
+    <div className="mx-auto flex h-screen flex-col gap-6 p-6">
       <div className="flex flex-row">
         <h1 className="text-2xl font-black text-neutral-900 flex-1">
           이쪽으로 가요
@@ -73,7 +73,7 @@ function PassengerList() {
         <span className="w-32 shrink-0 text-center">출발 시간</span>
       </div>
 
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-1 flex-col gap-3 overflow-y-auto">
         {MOCK_RIDES.map((ride) => (
           <TiketCard
             key={ride.id}
