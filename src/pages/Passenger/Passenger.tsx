@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 import TiketCard from "./Tiket";
 import homeIcon from "@/assets/home.svg";
+import Button from "@/components/Button";
 
 /**
  * @param id            유저 아이디
@@ -64,6 +65,7 @@ function PassengerList() {
           onChange={(e) => setDepartureTime(e.target.value)}
           className="field-sizing-content flex-1 min-w-auto rounded border border-gray-400 px-3 py-2 text-center text-sm"
         />
+        <Button className="bg-[#42c8f4] focus:bg-[#22a0cc]">검색</Button>
       </section>
 
       <div className="flex items-center border-b border-gray-300 pb-2 text-lg font-bold text-neutral-700">
