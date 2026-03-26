@@ -10,6 +10,7 @@ import NotFound from "./NotFound";
 import Home from "./Home";
 import Driver from "./Driver";
 import Passenger from "./Passenger/Passenger";
+import Taxi from "./Taxi";
 
 export default function Router() {
   const isLogin = useUser((state) => state.isLogin);
@@ -21,6 +22,7 @@ export default function Router() {
         <Route path="/" element={<Home />} />
         <Route path="/driver" element={<Driver />} />
         <Route path="/passenger" element={<Passenger />} />
+        <Route path="/taxi" element={<Taxi />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
