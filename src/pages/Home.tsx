@@ -24,7 +24,7 @@ export default function Home() {
           />
         </div>
         {/* 하단 분기 영역 */}
-        <div className="flex flex-1 no-underline text-white text-[20px] font-bold">
+        <div className="flex flex-1 no-underline text-white text-[20px] font-bold [-webkit-text-stroke:1.3px_black] [paint-order:stroke_fill]">
           <div className="flex flex-1 flex-col items-center justify-center">
             <Link
               to="/driver"
