@@ -2,9 +2,10 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import TiketCard from "./Tiket";
-import homeIcon from "@/assets/home.svg";
 import Button from "@/components/Button";
+import TiketCard from "./Tiket";
+
+import homeIcon from "@/assets/home.svg";
 
 /**
  * @param id            유저 아이디

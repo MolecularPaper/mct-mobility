@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 
 import baner from "@/assets/baner.gif";
-
 import driver from "@/assets/driver.webp";
 import passenger from "@/assets/passenger.webp";
 import taxi from "@/assets/taxi.webp";
