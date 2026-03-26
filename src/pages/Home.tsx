@@ -14,7 +14,7 @@ export default function Home() {
     <>
       <div className="flex flex-col h-screen overflow-hidden">
         <div className="w-full mt-8 flex justify-center">
-          <span className="text-6xl font-bold">상승 카풀</span>
+          <span className="text-6xl font-bold">상승 모빌리티</span>
         </div>
         <div className="w-full max-w-full mt-8 max-h-75 flex justify-center">
           <img
