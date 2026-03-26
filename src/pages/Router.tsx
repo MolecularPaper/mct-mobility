@@ -9,7 +9,7 @@ import Account from "@/widget/Account/Account";
 import NotFound from "./NotFound";
 import Home from "./Home";
 import Driver from "./Driver";
-import Passenger from "./Passenger/Passenger";
+import Passenger from "./Passenger";
 import Taxi from "./Taxi";
 
 export default function Router() {

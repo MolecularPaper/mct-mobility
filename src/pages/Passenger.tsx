@@ -69,6 +69,7 @@ function PassengerList() {
             key={ride.id}
             departure={ride.departure}
             arrival={ride.arrival}
+            buttonText="같이가요"
             departureTime={ride.departureTime}
           />
         ))}

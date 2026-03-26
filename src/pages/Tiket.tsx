@@ -1,14 +1,18 @@
 import Button from "@/components/Button";
 
+/**
+ * @param departure     출발지
+ * @param arrival       목적지
+ * @param departureTime 출발시간
+ * @param buttonText    버튼 내부 텍스트
+ * @param onClick       버튼 클릭 핸들러
+ */
 interface TiketProps {
-  /** 출발지 주소 */
   departure: string;
-  /** 도착지 주소 */
   arrival: string;
-  /** 출발 시간 (예: "13:00") */
   departureTime: string;
-  /** "같이가요!" 버튼 클릭 핸들러 */
-  onJoin?: () => void;
+  buttonText: string;
+  onClick?: () => void;
 }
 
 /**
@@ -19,7 +23,8 @@ export default function TiketCard({
   departure,
   arrival,
   departureTime,
-  onJoin,
+  buttonText,
+  onClick,
 }: TiketProps) {
   return (
     <div className="flex items-center justify-between gap-4 rounded-lg border border-gray-300 bg-white p-4 pr-3">
@@ -35,8 +40,8 @@ export default function TiketCard({
         </span>
         <Button
           className="rounded-full bg-[#42c8f4] border-none px-5 py-2 font-bold text-white hover:bg-[#2bb5e0] focus:bg-[#22a0cc]"
-          onClick={onJoin}>
-          같이가요!
+          onClick={onClick}>
+          {buttonText}
         </Button>
       </div>
     </div>
