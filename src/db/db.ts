@@ -1,22 +1,22 @@
 import { MongoClient, Db } from "mongodb";
-import process from "process";
 
-const uri = import.meta.env.VITE_DB_URI || "";
-const dbName = import.meta.env.VITE_DB_NAME || "";
-const client = new MongoClient(uri);
+const MONGODB_URI = import.meta.env.VITE_DB_URI!;
+const MONGODB_DB = import.meta.env.VITE_DB_NAME!;
 
-let db: Db;
+let cachedClient: MongoClient | null = null;
+let cachedDb: Db | null = null;
 
-export async function connectDB() {
-  try {
-    await client.connect();
-    console.log("MongoDB Atlas 연결");
-    db = client.db(dbName); // 사용할 데이터베이스 이름
-    return db;
-  } catch (error) {
-    console.error("DB 연결 에러: ", error);
-    process.exit(1);
+export async function connectToDatabase() {
+  if (cachedClient && cachedDb) {
+    return { client: cachedClient, db: cachedDb };
   }
-}
 
-export { db };
+  const client = new MongoClient(MONGODB_URI);
+  await client.connect();
+  const db = client.db(MONGODB_DB);
+
+  cachedClient = client;
+  cachedDb = db;
+
+  return { client, db };
+}
