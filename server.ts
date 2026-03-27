@@ -1,7 +1,10 @@
 import fs from "node:fs/promises";
 import express from "express";
-
 import { Transform } from "node:stream";
+
+import taxiRouter from "./src/routes/taxi";
+import carpoolRouter from "./src/routes/carpool";
+import userRouter from "./src/routes/user";
 
 // Constants
 const isProduction = process.env.NODE_ENV === "production";
@@ -52,8 +55,9 @@ app.use("*all", async (req, res) => {
       render = (await vite!.ssrLoadModule("/src/entry-server.tsx")).render;
     } else {
       template = templateHtml;
+      const serverEntry = "./server/entry-server.js";
       // @ts-expect-error dist files exist after build
-      render = (await import("./server/entry-server.js")).render;
+      render = (await import(/* @vite-ignore */ serverEntry)).render;
     }
 
     let didError = false;
@@ -98,6 +102,9 @@ app.use("*all", async (req, res) => {
     res.status(500).end(error.stack);
   }
 });
+app.use(userRouter);
+app.use(carpoolRouter);
+app.use(taxiRouter);
 
 // Start http server
 app.listen(port, () => {
