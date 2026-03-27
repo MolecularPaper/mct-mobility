@@ -1,7 +1,8 @@
 import { MongoClient, Db } from "mongodb";
+import "dotenv/config";
 
-const MONGODB_URI = import.meta.env.VITE_DB_URI!;
-const MONGODB_DB = import.meta.env.VITE_DB_NAME!;
+const MONGODB_URI = process.env.VITE_DB_URI!;
+const MONGODB_DB = process.env.VITE_DB_NAME!;
 
 let cachedClient: MongoClient | null = null;
 let cachedDb: Db | null = null;
