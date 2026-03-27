@@ -2,8 +2,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
+import { getKSTIsoString } from "@/utils/date";
 import { Tiket } from "@/states/tiket";
-
 import Button from "@/components/Button";
 import TiketCard from "./Tiket";
 
@@ -22,7 +22,7 @@ const MOCK_RIDES: Tiket[] = Array.from({ length: 8 }, (_, i) => ({
  */
 function PassengerList() {
   const [search, setSearch] = useState("");
-  const [departureTime, setDepartureTime] = useState("2026-03-24T04:00");
+  const [departureTime, setDepartureTime] = useState(getKSTIsoString());
 
   return (
     <div className="mx-auto flex h-screen flex-col gap-6 p-6 bg-gray-50">
@@ -47,8 +47,7 @@ function PassengerList() {
           type="datetime-local"
           name="trip-start"
           value={departureTime}
-          min="2026-01-01T00:00"
-          max="2026-12-31T23:59"
+          min={getKSTIsoString()}
           onChange={(e) => setDepartureTime(e.target.value)}
           className="field-sizing-content flex-1 min-w-auto rounded-lg bg-gray-100 px-3 py-2 text-center text-sm outline-none focus:ring-2 focus:ring-blue-400"
         />

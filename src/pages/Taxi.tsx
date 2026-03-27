@@ -1,6 +1,7 @@
-import { Link } from "react-router-dom";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
+import { getKSTIsoString } from "@/utils/date";
 import Button from "@/components/Button";
 
 import homeIcon from "@/assets/home.svg";
@@ -8,7 +9,7 @@ import homeIcon from "@/assets/home.svg";
 export default function Taxi() {
   const [departure, setDeparture] = useState("");
   const [destination, setDestination] = useState("");
-  const [departureTime, setDepartureTime] = useState("");
+  const [departureTime, setDepartureTime] = useState(getKSTIsoString());
 
   return (
     <div className="mx-auto flex h-screen flex-col bg-gray-50">
@@ -45,8 +46,10 @@ export default function Taxi() {
             <input
               type="datetime-local"
               value={departureTime}
+              min={getKSTIsoString()}
               onChange={(e) => setDepartureTime(e.target.value)}
               className="w-full rounded-lg bg-gray-100 px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-blue-400"
+              suppressHydrationWarning={true}
             />
           </div>
         </div>
