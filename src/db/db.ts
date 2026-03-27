@@ -7,7 +7,7 @@ const MONGODB_DB = process.env.VITE_DB_NAME!;
 let cachedClient: MongoClient | null = null;
 let cachedDb: Db | null = null;
 
-export async function connectToDatabase() {
+async function connectToDatabase() {
   if (cachedClient && cachedDb) {
     return { client: cachedClient, db: cachedDb };
   }
@@ -21,3 +21,20 @@ export async function connectToDatabase() {
 
   return { client, db };
 }
+
+async function setupIndexes() {
+  const { db } = await connectToDatabase();
+
+  await db.collection("User").createIndex({ id: 1 }, { unique: true });
+  await db
+    .collection("Carpool")
+    .createIndex({ driver_id: 1 }, { unique: true });
+  await db
+    .collection("Taxi")
+    .createIndex({ passengers_id: 1 }, { unique: true });
+
+  process.exit(0);
+}
+
+setupIndexes();
+export { connectToDatabase };
