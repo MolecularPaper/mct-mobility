@@ -32,8 +32,6 @@ async function setupIndexes() {
   await db
     .collection("Taxi")
     .createIndex({ passengers_id: 1 }, { unique: true });
-
-  process.exit(0);
 }
 
 setupIndexes();
