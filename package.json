@@ -4,11 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "node server",
-    "build": "npm run build:client && npm run build:server",
+    "dev": "tsx server",
+    "build": "yarn build:client && yarn build:server && yarn build:express",
+    "build:express": "tsc -p tsconfig.server.json",
     "build:client": "vite build --outDir dist/client",
     "build:server": "vite build --ssr src/entry-server.tsx --outDir dist/server",
-    "preview": "cross-env NODE_ENV=production node server",
+    "preview": "cross-env NODE_ENV=production node dist/server.js",
     "prepare": "husky",
     "commit": "git-cz"
   },
@@ -46,6 +47,7 @@
     "inquirer": "9",
     "postcss": "^8.5.8",
     "styled-components": "^6.3.12",
+    "tsx": "^4.21.0",
     "typescript": "~5.9.3",
     "vite": "^7.3.1",
     "vite-plugin-react-click-to-component": "^4.2.1"
