@@ -8,6 +8,7 @@ import homeIcon from "@/assets/home.svg";
 export default function Taxi() {
   const [departure, setDeparture] = useState("");
   const [destination, setDestination] = useState("");
+  const [departureTime, setDepartureTime] = useState("");
 
   return (
     <div className="mx-auto flex h-screen flex-col bg-gray-50">
@@ -17,8 +18,6 @@ export default function Taxi() {
           <img className="w-full h-full" src={homeIcon} alt="홈 버튼" />
         </Link>
       </div>
-
-      <div className="flex-1"></div>
 
       {/* 출발지/도착지 입력 */}
       <div className="bg-white mx-4 mt-4 rounded-xl p-4 shadow-md">
@@ -43,6 +42,12 @@ export default function Taxi() {
               onChange={(e) => setDestination(e.target.value)}
               className="w-full rounded-lg bg-gray-100 px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-blue-400"
             />
+            <input
+              type="datetime-local"
+              value={departureTime}
+              onChange={(e) => setDepartureTime(e.target.value)}
+              className="w-full rounded-lg bg-gray-100 px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-blue-400"
+            />
           </div>
         </div>
       </div>
@@ -51,6 +56,12 @@ export default function Taxi() {
           택시 호출하기
         </Button>
       </div>
+      <div className="flex items-center border-b border-gray-300 pb-2 text-lg font-bold text-neutral-700">
+        <span className="ml-5 w-20">출발 시간</span>
+        <span className="flex-1 shrink-0 text-center">출발-&gt;도착</span>
+        <span className="mr-5 w-20">승인 여부</span>
+      </div>
+      <div className="flex flex-1 flex-col gap-3 overflow-y-auto"></div>
     </div>
   );
 }
