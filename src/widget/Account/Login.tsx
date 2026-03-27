@@ -1,11 +1,15 @@
-import { AccountChildProps } from "./Account";
-
+import { useState } from "react";
 import { useUser } from "@/states/user";
 
 import Input from "@/components/Input";
 import Button from "@/components/Button";
 
+import { AccountChildProps } from "./Account";
+
 export default function Login({ setActiveLoginPage }: AccountChildProps) {
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
+
   const login = useUser((state) => state.login);
 
   function RequestLogin() {
@@ -23,6 +27,9 @@ export default function Login({ setActiveLoginPage }: AccountChildProps) {
           className:
             "flex-1 rounded-lg bg-gray-100 px-3 py-2.5 outline-none focus:ring-2 focus:ring-blue-400",
           placeholder: "닉네임",
+          onChange: (e) => {
+            setId(e.target.value);
+          },
         }}
       />
       <Input
@@ -31,6 +38,9 @@ export default function Login({ setActiveLoginPage }: AccountChildProps) {
           className:
             "flex-1 rounded-lg bg-gray-100 px-3 py-2.5 outline-none focus:ring-2 focus:ring-blue-400",
           placeholder: "비밀번호",
+          onChange: (e) => {
+            setPassword(e.target.value);
+          },
         }}
       />
       <Button

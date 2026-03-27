@@ -1,8 +1,16 @@
-import { AccountChildProps } from "./Account";
+import { useState } from "react";
+
 import Input from "@/components/Input";
 import Button from "@/components/Button";
 
+import { AccountChildProps } from "./Account";
+
 export default function Register({ setActiveLoginPage }: AccountChildProps) {
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [vc, setVC] = useState(""); //가입 승인 코드
+
   function RequestRegister() {}
   function ResponseRegister() {}
 
@@ -15,6 +23,9 @@ export default function Register({ setActiveLoginPage }: AccountChildProps) {
           className:
             "flex-1 rounded-lg bg-gray-100 px-3 py-2.5 outline-none focus:ring-2 focus:ring-blue-400",
           placeholder: "닉네임",
+          onChange: (e) => {
+            setId(e.target.value);
+          },
         }}
       />
       <Input
@@ -23,6 +34,9 @@ export default function Register({ setActiveLoginPage }: AccountChildProps) {
           className:
             "flex-1 rounded-lg bg-gray-100 px-3 py-2.5 outline-none focus:ring-2 focus:ring-blue-400",
           placeholder: "비밀번호",
+          onChange: (e) => {
+            setPassword(e.target.value);
+          },
         }}
       />
       <Input
@@ -31,6 +45,9 @@ export default function Register({ setActiveLoginPage }: AccountChildProps) {
           className:
             "flex-1 rounded-lg bg-gray-100 px-3 py-2.5 outline-none focus:ring-2 focus:ring-blue-400",
           placeholder: "비밀번호 확인",
+          onChange: (e) => {
+            setConfirmPassword(e.target.value);
+          },
         }}
       />
       <Input
@@ -39,6 +56,9 @@ export default function Register({ setActiveLoginPage }: AccountChildProps) {
           className:
             "flex-1 rounded-lg bg-gray-100 px-3 py-2.5 outline-none focus:ring-2 focus:ring-blue-400",
           placeholder: "승인코드",
+          onChange: (e) => {
+            setVC(e.target.value);
+          },
         }}
       />
       <Button
