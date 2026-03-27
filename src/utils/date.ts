@@ -1,7 +1,8 @@
 export function getKST() {
-  const now: Date = new Date();
-  const kstOffset: number = 9 * 60 * 60 * 1000;
-  return new Date(now.getTime() + kstOffset);
+  const kstNow: Date = new Date();
+  kstNow.setHours(kstNow.getHours() + 9);
+
+  return kstNow;
 }
 
 export function getKSTIsoString(): string {
