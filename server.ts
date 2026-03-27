@@ -39,6 +39,11 @@ if (!isProduction) {
   app.use(base, sirv("./dist/client", { extensions: [] }));
 }
 
+app.use(express.json());
+app.use(userRouter);
+app.use(carpoolRouter);
+app.use(taxiRouter);
+
 // Serve HTML
 app.use("*all", async (req, res) => {
   try {
@@ -102,9 +107,6 @@ app.use("*all", async (req, res) => {
     res.status(500).end(error.stack);
   }
 });
-app.use(userRouter);
-app.use(carpoolRouter);
-app.use(taxiRouter);
 
 // Start http server
 app.listen(port, () => {
