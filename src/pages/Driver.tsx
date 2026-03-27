@@ -18,6 +18,8 @@ const MOCK_RIDES: Tiket[] = Array.from({ length: 2 }, (_, i) => ({
 }));
 
 export default function DriverList({}: PageDriverProps) {
+  const [departure, setDeparture] = useState("");
+  const [destination, setDestination] = useState("");
   const [departureTime, setDepartureTime] = useState("2026-03-24T04:00");
 
   return (
@@ -36,11 +38,15 @@ export default function DriverList({}: PageDriverProps) {
         <input
           type="text"
           placeholder="출발지를 입력해주세요"
+          value={departure}
+          onChange={(e) => setDeparture(e.target.value)}
           className="rounded-lg bg-gray-100 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-400"
         />
         <input
           type="text"
           placeholder="도착지를 입력해주세요"
+          value={destination}
+          onChange={(e) => setDestination(e.target.value)}
           className="rounded-lg bg-gray-100 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-400"
         />
         <input
