@@ -1,9 +1,27 @@
-interface User {
-  _id: string; // id를 직접 string으로 사용
+import { ObjectId } from "mongodb";
+
+export interface User {
+  _id?: ObjectId;
+  id: string; // primary key
   password: string;
+  createdAt: Date;
 }
 
-interface Carpool {
-  driver_id: string;
-  passengers_id: string[];
+export interface Carpool {
+  _id?: ObjectId;
+  driver_id: string; // primary key, ref: User.id
+  passengers_id: string[]; // ref: User.id (복수)
+  departure: string;
+  destination: string;
+  departureTime: Date;
+  createdAt: Date;
+}
+
+export interface Taxi {
+  _id?: ObjectId;
+  passengers_id: string; // primary key, ref: User.id
+  departure: string;
+  destination: string;
+  departureTime: Date;
+  createdAt: Date;
 }
