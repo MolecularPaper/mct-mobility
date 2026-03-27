@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useUser } from "@/states/user";
+import { useUser } from "@/types/user";
 
 import Input from "@/components/Input";
 import Button from "@/components/Button";

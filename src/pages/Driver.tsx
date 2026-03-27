@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { getKSTIsoString } from "@/utils/date";
-import { Tiket } from "@/states/tiket";
+import { Tiket } from "@/types/tiket";
 import Button from "@/components/Button";
 import TiketCard from "./Tiket";
 

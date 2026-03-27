@@ -1,7 +1,7 @@
 // src/App.tsx
 import { Routes, Route } from "react-router-dom";
 
-import { useUser } from "@/states/user";
+import { useUser } from "@/types/user";
 
 import Modal from "@/components/Modal";
 import Account from "@/widget/Account/Account";
