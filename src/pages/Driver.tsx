@@ -22,7 +22,7 @@ export default function DriverList() {
   async function postCarpool() {
     if (!isLoggedIn) return;
 
-    await fetch("/api/carpool", {
+    const res = await fetch("/api/carpool", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -34,6 +34,11 @@ export default function DriverList() {
       }),
       credentials: "include",
     });
+
+    if (!res.ok) {
+      alert("등록할 수 없습니다, 입력값을 확인해주세요!");
+      return;
+    }
 
     setDeparture("");
     setDestination("");
