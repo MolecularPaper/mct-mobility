@@ -10,6 +10,7 @@ import Home from "./Home";
 import Driver from "./Driver";
 import Passenger from "./Passenger";
 import Taxi from "./Taxi";
+import TaxiReservation from "./TaxiReservation";
 
 export default function Router() {
   const { isLoggedIn } = useAuthInfo();
@@ -27,6 +28,7 @@ export default function Router() {
         <Route path="/driver" element={<Driver />} />
         <Route path="/passenger" element={<Passenger />} />
         <Route path="/taxi" element={<Taxi />} />
+        <Route path="/admin/taxi" element={<TaxiReservation />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

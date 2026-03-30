@@ -5,12 +5,12 @@ import { ObjectId } from "mongodb";
 import { useAuthInfo } from "@/hooks";
 import { getKSTIsoString } from "@/utils/date";
 import Button from "@/components/Button";
-import type { Taxi as TaxiRecord } from "@/db/table";
+import type { Taxi } from "@/db/table";
 
 import homeIcon from "@/assets/home.svg";
 
 /** 서버에서 aggregation으로 내려오는 Taxi + status */
-interface TaxiWithStatus extends TaxiRecord {
+interface TaxiWithStatus extends Taxi {
   status: "pending" | "approved" | "rejected";
 }
 
