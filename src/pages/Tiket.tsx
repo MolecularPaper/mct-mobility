@@ -14,6 +14,7 @@ interface TiketProps {
   departureTime?: Date;
   buttonText: string;
   onClick?: () => void;
+  onCardClick?: () => void;
 }
 
 /**
@@ -27,9 +28,12 @@ export default function TiketCard({
   departureTime,
   buttonText,
   onClick,
+  onCardClick,
 }: TiketProps) {
   return (
-    <div className="flex items-center justify-between gap-4 rounded-lg border border-gray-300 bg-white p-4 pr-3">
+    <div
+      className="flex items-center justify-between gap-4 rounded-lg border border-gray-300 bg-white p-4 pr-3 cursor-pointer hover:bg-gray-50"
+      onClick={onCardClick}>
       <div className="flex w-fit shrink-0 flex-col items-center gap-1">
         {driverId && <p>운전자: {driverId}</p>}
         <p className="m-0 text-sm leading-relaxed text-neutral-800">
@@ -50,7 +54,10 @@ export default function TiketCard({
         </span>
         <Button
           className="mt-2 rounded-full bg-[#42c8f4] border-none px-5 py-2 font-bold text-white hover:bg-[#2bb5e0] focus:bg-[#22a0cc]"
-          onClick={onClick}>
+          onClick={(e) => {
+            e.stopPropagation();
+            onClick?.();
+          }}>
           {buttonText}
         </Button>
       </div>
