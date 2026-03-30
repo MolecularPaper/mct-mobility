@@ -86,6 +86,7 @@ function PassengerList() {
       return (
         <TiketCard
           key={carpool._id?.toString()}
+          driverId={carpool.driver_id}
           departure={carpool.departure}
           arrival={carpool.destination}
           departureTime={carpool.departureTime}
@@ -99,6 +100,7 @@ function PassengerList() {
       return (
         <TiketCard
           key={carpool._id?.toString()}
+          driverId={carpool.driver_id}
           departure={carpool.departure}
           arrival={carpool.destination}
           buttonText="같이가요"
@@ -149,7 +151,7 @@ function PassengerList() {
 
       <div className="flex items-center border-b border-gray-300 pb-2 text-lg font-bold text-neutral-700">
         <span className="ml-5 flex-1">출발-&gt;도착</span>
-        <span className="w-32 shrink-0 text-center">출발 시간</span>
+        <span className="mr-5 w-32 shrink-0 text-center">출발 시간</span>
       </div>
 
       <div className="flex flex-1 flex-col gap-3 overflow-y-auto">
