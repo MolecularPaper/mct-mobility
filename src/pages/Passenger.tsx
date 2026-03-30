@@ -21,7 +21,7 @@ function PassengerList() {
   const { isLoggedIn, userId } = useAuthInfo();
 
   const [search, setSearch] = useState("");
-  const [departureTime, setDepartureTime] = useState(getKSTIsoString());
+  const [departureTime, setDepartureTime] = useState("");
   const [carpoolList, setCarpoolList] = useState(new Array<Carpool>());
   const [selectedCarpool, setSelectedCarpool] = useState<Carpool | null>(null);
 
@@ -128,7 +128,7 @@ function PassengerList() {
 
   useEffect(() => {
     getCarpoolList();
-  }, [isLoggedIn]);
+  }, [isLoggedIn, search, departureTime]);
 
   return (
     <>
