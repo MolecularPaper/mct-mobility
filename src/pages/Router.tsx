@@ -1,6 +1,6 @@
 // src/App.tsx
 import { Routes, Route } from "react-router-dom";
-import { useActivityRefresh, useAuthInfo } from "@/hooks";
+import { useAuthRefresh, useAuthInfo } from "@/hooks";
 
 import { Modal } from "@/components";
 import { Account } from "@/widget";
@@ -19,7 +19,7 @@ export default function Router() {
     return <Modal active={!isLoggedIn} Child={Account} />;
   }
 
-  useActivityRefresh();
+  useAuthRefresh();
 
   return (
     <div>

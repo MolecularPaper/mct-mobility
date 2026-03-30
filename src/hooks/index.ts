@@ -1,2 +1,2 @@
-export { useAuthRefresh as useActivityRefresh } from "./authRefresh";
+export { useAuthRefresh } from "./authRefresh";
 export { useAuthInfo } from "./authInfo";
