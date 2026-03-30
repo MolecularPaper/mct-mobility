@@ -3,6 +3,7 @@ import { Router } from "express";
 import { authGuard } from "@/middleware/authGuard";
 import { connectToDatabase } from "@/db/db";
 import { Carpool } from "@/db/table";
+import { getKST } from "@/utils/date";
 
 const carpoolRouter = Router();
 
@@ -64,6 +65,10 @@ carpoolRouter.patch("/api/carpool", authGuard, async (req, res) => {
       .findOne({ _id: new ObjectId(objectId) });
     if (!carpool) {
       return res.status(404).json({ error: "Carpool not found" });
+    }
+
+    if (new Date(carpool.departureTime) < getKST()) {
+      return res.status(400).json({ error: "Carpool has already departed" });
     }
 
     if (remove) {
@@ -128,6 +133,8 @@ carpoolRouter.get("/api/carpool", authGuard, async (req, res) => {
     if (availableOnly === "true") {
       filter.$expr = { $lt: [{ $size: "$passengers_ids" }, "$max_passenger"] };
     }
+
+    filter.departureTime = { $gte: getKST() };
 
     const carpools = await db.collection("Carpool").find(filter).toArray();
     res.json(carpools);

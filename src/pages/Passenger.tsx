@@ -57,8 +57,6 @@ function PassengerList() {
       body: JSON.stringify({ objectId, passengerId, remove }),
     });
 
-    const data = await res.json();
-
     if (res.ok) {
       await getCarpoolList();
       return;
@@ -67,7 +65,7 @@ function PassengerList() {
     // 에러 종류별 처리
     switch (res.status) {
       case 400:
-        alert(`정원 초과 (${data.current}/${data.max}명)`);
+        await getCarpoolList();
         break;
       case 409:
         alert("이미 등록된 승객입니다");
