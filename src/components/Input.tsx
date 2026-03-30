@@ -7,26 +7,29 @@ interface InputProps extends ComponentPropsWithoutRef<"div"> {
   inputProps?: ComponentPropsWithoutRef<"input">;
 }
 
-export default function Input(props: InputProps) {
+export default function Input({
+  label,
+  labelProps,
+  inputProps,
+  ...rest
+}: InputProps) {
   return (
     <div
-      {...props}
+      {...rest}
       className={twMerge(
         "flex flex-row justify-center items-center",
-        props?.className,
+        rest?.className,
       )}>
-      {props.label ?? (
-        <p
-          {...props.labelProps}
-          className={twMerge("", props.labelProps?.className)}>
-          {props.label}
+      {label ?? (
+        <p {...labelProps} className={twMerge("", labelProps?.className)}>
+          {label}
         </p>
       )}
       <input
-        {...props.inputProps}
+        {...inputProps}
         className={twMerge(
           "bg-transparent border border-transparent border-b-black",
-          props.inputProps?.className,
+          inputProps?.className,
         )}></input>
     </div>
   );
