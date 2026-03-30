@@ -157,7 +157,7 @@ function PassengerList() {
         <section className="flex flex-col gap-2">
           <input
             type="text"
-            placeholder="출발지 또는 도착지를 입력해주세요"
+            placeholder="출발지, 도착지 또는 운전자 이름을 입력해주세요"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="rounded-lg bg-gray-100 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-400"

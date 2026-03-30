@@ -163,7 +163,11 @@ carpoolRouter.get("/api/carpool", authGuard, async (req, res) => {
         .map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
       const pattern = words.join("|");
       const regex = { $regex: pattern, $options: "i" };
-      filter.$or = [{ departure: regex }, { destination: regex }];
+      filter.$or = [
+        { departure: regex },
+        { destination: regex },
+        { driver_id: regex },
+      ];
     }
 
     // 시간 검색 (유사값: ±DEPARTURE_TIME_RANGE_MS 범위)
