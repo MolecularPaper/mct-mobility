@@ -1,27 +1,77 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { ObjectId } from "mongodb";
 
+import { Button, Input } from "@/components";
+import { useAuthInfo } from "@/hooks";
 import { getKSTIsoString } from "@/utils/date";
-import { Tiket } from "@/types/tiket";
-import Button from "@/components/Button";
+
 import TiketCard from "./Tiket";
-
 import homeIcon from "@/assets/home.svg";
+import { Carpool } from "@/db/table";
 
-//운전자용 페이지
-interface PageDriverProps {}
+export default function DriverList() {
+  const { isLoggedIn, userId } = useAuthInfo();
 
-const MOCK_RIDES: Tiket[] = Array.from({ length: 2 }, (_, i) => ({
-  id: i + 1,
-  departure: "OO도 OO시 OOO구 OOO로",
-  arrival: "OO도 OO시 OOO구 OOO로",
-  departureTime: "13:00",
-}));
-
-export default function DriverList({}: PageDriverProps) {
   const [departure, setDeparture] = useState("");
   const [destination, setDestination] = useState("");
   const [departureTime, setDepartureTime] = useState(getKSTIsoString());
+  const [maxPassenger, setMaxPassenger] = useState(0);
+  const [carpoolList, setCarpoolList] = useState(new Array<Carpool>());
+
+  async function postCarpool() {
+    await fetch("/api/carpool", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        driverId: userId,
+        maxPassenger,
+        departure,
+        destination,
+        departureTime,
+      }),
+      credentials: "include",
+    });
+
+    setDeparture("");
+    setDestination("");
+    setDepartureTime("");
+    setMaxPassenger(0);
+
+    await getCarpoolList();
+  }
+
+  async function removeCarpool(objectId?: ObjectId) {
+    await fetch("/api/carpool", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        objectId,
+      }),
+    });
+
+    await getCarpoolList();
+  }
+
+  async function getCarpoolList() {
+    const res = await fetch(`/api/carpool?driverId=${userId}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    });
+
+    if (!res.ok || !res.body) return;
+
+    const list: Carpool[] = await res.json();
+    console.log(list);
+    setCarpoolList(list);
+  }
+
+  useEffect(() => {
+    if (!isLoggedIn) return;
+
+    getCarpoolList();
+  }, [isLoggedIn]);
 
   return (
     <div className="mx-auto flex h-screen flex-col gap-6 p-6 bg-gray-50">
@@ -52,13 +102,30 @@ export default function DriverList({}: PageDriverProps) {
         />
         <input
           type="datetime-local"
-          name="trip-start"
           value={departureTime}
           min={getKSTIsoString()}
           onChange={(e) => setDepartureTime(e.target.value)}
           className="field-sizing-content flex-1 min-w-auto rounded-lg bg-gray-100 px-3 py-2 text-center text-sm outline-none focus:ring-2 focus:ring-blue-400"
         />
-        <Button className="rounded-xl bg-blue-400 border-none font-bold text-white hover:bg-blue-500 focus:bg-blue-500">
+        <Input
+          label="최대 승객"
+          labelProps={{
+            className: "ml-1 mr-2 text-[0.8rem]",
+          }}
+          inputProps={{
+            type: "number",
+            value: maxPassenger,
+            min: 0,
+            onChange: (e) => {
+              setMaxPassenger(parseInt(e.target.value.replace(/[^0-9]/g, "")));
+            },
+            className:
+              "flex-1 rounded-lg bg-gray-100 border-none px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-400",
+          }}
+        />
+        <Button
+          onClick={postCarpool}
+          className="rounded-xl bg-blue-400 border-none font-bold text-white hover:bg-blue-500 focus:bg-blue-500">
           등록
         </Button>
       </section>
@@ -69,13 +136,16 @@ export default function DriverList({}: PageDriverProps) {
       </div>
 
       <div className="flex flex-1 flex-col gap-3 overflow-y-auto">
-        {MOCK_RIDES.map((ride) => (
+        {carpoolList.map((carpool) => (
           <TiketCard
-            key={ride.id}
-            departure={ride.departure}
-            arrival={ride.arrival}
-            departureTime={ride.departureTime}
+            key={carpool.driver_id}
+            departure={carpool.departure}
+            arrival={carpool.destination}
+            departureTime={carpool.departureTime}
             buttonText="삭제"
+            onClick={() => {
+              removeCarpool(carpool._id);
+            }}
           />
         ))}
       </div>
