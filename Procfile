@@ -1,1 +1,1 @@
-web: yarn build && yarn preview
+web: node dist/server.js
