@@ -180,9 +180,13 @@ function PassengerList() {
           <span className="mr-5 w-32 shrink-0 text-center">출발 시간</span>
         </div>
 
-        <div className="flex flex-1 flex-col gap-3 overflow-y-auto">
-          {carpoolList.map(filterCarpoolItem)}
-        </div>
+        {carpoolList.length > 0 ? (
+          <div className="flex flex-1 flex-col gap-3 overflow-y-auto">
+            {carpoolList.map(filterCarpoolItem)}
+          </div>
+        ) : (
+          <p className="text-center">{"검색 결과가 없습니다"}</p>
+        )}
       </div>
     </>
   );
