@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
-import { useAuth } from "@/hooks/authHook";
+import { useAuthInfo } from "@/hooks";
+import { logout } from "@/utils/auth";
 import Button from "@/components/Button";
 
 import baner from "@/assets/baner.gif";
@@ -13,17 +14,7 @@ import taxi from "@/assets/taxi.webp";
  * 운전자/승객 페이지로 이동하는 분기 화면
  */
 export default function Home() {
-  const { userId } = useAuth();
-
-  async function Logout() {
-    await fetch("/api/auth/logout", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-    });
-
-    window.location.reload();
-  }
+  const { userId } = useAuthInfo();
 
   return (
     <>
@@ -34,7 +25,7 @@ export default function Home() {
           </span>
           <div className="mr-6 flex flex-col">
             <p>유저: {userId}</p>
-            <Button className="text-[12px] mt-1 p-0.5" onClick={Logout}>
+            <Button className="text-[12px] mt-1 p-0.5" onClick={logout}>
               로그아웃
             </Button>
           </div>

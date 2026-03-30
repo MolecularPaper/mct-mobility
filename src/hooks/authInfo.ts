@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export function useAuth() {
+export function useAuthInfo() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null); // null = 확인 중
   const [userId, setUserId] = useState<string | null>(null);
 
