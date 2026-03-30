@@ -8,8 +8,19 @@
     "skipLibCheck": true,
     "strict": true,
     "esModuleInterop": true,
-    "outDir": "./dist",
-    "rootDir": "."
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "rootDir": ".",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
-  "include": ["server.ts"]
+  "include": [
+    "server.ts",
+    "src/routes",
+    "src/middleware",
+    "src/db",
+    "src/utils"
+  ]
 }

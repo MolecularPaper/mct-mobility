@@ -4,10 +4,10 @@ import express from "express";
 import { Transform } from "node:stream";
 import cookieParser from "cookie-parser";
 
-import authRouter from "./src/routes/auth";
-import taxiRouter from "./src/routes/taxi";
-import carpoolRouter from "./src/routes/carpool";
-import userRouter from "./src/routes/user";
+import authRouter from "./src/routes/auth.ts";
+import taxiRouter from "./src/routes/taxi.ts";
+import carpoolRouter from "./src/routes/carpool.ts";
+import userRouter from "./src/routes/user.ts";
 
 // Constants
 const isProduction = process.env.NODE_ENV === "production";
@@ -66,7 +66,7 @@ app.use("*all", async (req, res) => {
     } else {
       template = templateHtml;
       const serverEntry = "./server/entry-server.js";
-      // @ts-expect-error dist files exist after build
+      // @ts-expect-error dynamic import for production build
       render = (await import(/* @vite-ignore */ serverEntry)).render;
     }
 

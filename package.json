@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "tsx server",
     "build": "yarn build:client && yarn build:server && yarn build:express",
-    "build:express": "tsc -p tsconfig.server.json",
+    "build:express": "npx esbuild server.ts --bundle --platform=node --format=esm --outfile=dist/server.js --packages=external --alias:@=./src",
     "build:client": "vite build --outDir dist/client",
     "build:server": "vite build --ssr src/entry-server.tsx --outDir dist/server",
     "preview": "cross-env NODE_ENV=production node dist/server.js",

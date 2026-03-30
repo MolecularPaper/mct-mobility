@@ -15,7 +15,6 @@ export const authGuard = (req: Request, res: Response, next: NextFunction) => {
   const token = req.cookies["access_token"];
 
   if (!token) {
-    window.location.reload();
     return res.status(401).json({ error: "Unauthorized" });
   }
 
