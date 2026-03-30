@@ -1,28 +1,122 @@
 //승객용 페이지
-import { useState } from "react";
+import { JSX, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { ObjectId } from "mongodb";
 
+import { useAuthInfo } from "@/hooks";
+import { Carpool } from "@/db/table";
 import { getKSTIsoString } from "@/utils/date";
-import { Tiket } from "@/types/tiket";
 import Button from "@/components/Button";
 import TiketCard from "./Tiket";
 
 import homeIcon from "@/assets/home.svg";
-
-const MOCK_RIDES: Tiket[] = Array.from({ length: 8 }, (_, i) => ({
-  id: i + 1,
-  departure: "OO도 OO시 OOO구 OOO로",
-  arrival: "OO도 OO시 OOO구 OOO로",
-  departureTime: "13:00",
-}));
 
 /**
  * 승객용 카풀 목록 페이지
  * 경로/시간 입력 폼과 카풀 목록을 표시한다.
  */
 function PassengerList() {
+  const { isLoggedIn, userId } = useAuthInfo();
+
   const [search, setSearch] = useState("");
   const [departureTime, setDepartureTime] = useState(getKSTIsoString());
+  const [carpoolList, setCarpoolList] = useState(new Array<Carpool>());
+
+  async function getCarpoolList() {
+    if (!isLoggedIn) return;
+
+    const res = await fetch("/api/carpool", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    });
+
+    if (!res.ok || !res.body) return;
+
+    const list: Carpool[] = await res.json();
+    console.log(list);
+    setCarpoolList(list);
+  }
+
+  async function patchCarpoolPassenger(
+    passengerId: string,
+    objectId?: ObjectId,
+    remove?: boolean,
+  ) {
+    if (!isLoggedIn) return;
+
+    const res = await fetch(`/api/carpool`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ objectId, passengerId, remove }),
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      await getCarpoolList();
+      return;
+    }
+
+    // 에러 종류별 처리
+    switch (res.status) {
+      case 400:
+        alert(`정원 초과 (${data.current}/${data.max}명)`);
+        break;
+      case 409:
+        alert("이미 등록된 승객입니다");
+        break;
+      case 404:
+        alert("카풀을 찾을 수 없습니다");
+        break;
+      default:
+        alert("승객 등록에 실패했습니다");
+        break;
+    }
+  }
+
+  function filterCarpoolList(carpool: Carpool): JSX.Element | undefined {
+    if (!isLoggedIn || !userId) return;
+
+    if (
+      carpool.passengers_ids.length >= carpool.max_passenger ||
+      carpool.driver_id === userId
+    )
+      return;
+
+    if (carpool.passengers_ids.includes(userId)) {
+      return (
+        <TiketCard
+          key={carpool._id?.toString()}
+          departure={carpool.departure}
+          arrival={carpool.destination}
+          departureTime={carpool.departureTime}
+          buttonText="등록해제"
+          onClick={() => {
+            patchCarpoolPassenger(userId, carpool._id, true);
+          }}
+        />
+      );
+    } else {
+      return (
+        <TiketCard
+          key={carpool._id?.toString()}
+          departure={carpool.departure}
+          arrival={carpool.destination}
+          buttonText="같이가요"
+          departureTime={carpool.departureTime}
+          onClick={() => {
+            patchCarpoolPassenger(userId, carpool._id);
+          }}
+        />
+      );
+    }
+  }
+
+  useEffect(() => {
+    getCarpoolList();
+  }, [isLoggedIn]);
 
   return (
     <div className="mx-auto flex h-screen flex-col gap-6 p-6 bg-gray-50">
@@ -62,15 +156,7 @@ function PassengerList() {
       </div>
 
       <div className="flex flex-1 flex-col gap-3 overflow-y-auto">
-        {MOCK_RIDES.map((ride) => (
-          <TiketCard
-            key={ride.id}
-            departure={ride.departure}
-            arrival={ride.arrival}
-            buttonText="같이가요"
-            departureTime={ride.departureTime}
-          />
-        ))}
+        {carpoolList.map(filterCarpoolList)}
       </div>
     </div>
   );

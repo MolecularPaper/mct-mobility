@@ -20,6 +20,8 @@ export default function DriverList() {
   const [carpoolList, setCarpoolList] = useState(new Array<Carpool>());
 
   async function postCarpool() {
+    if (!isLoggedIn) return;
+
     await fetch("/api/carpool", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -42,6 +44,8 @@ export default function DriverList() {
   }
 
   async function removeCarpool(objectId?: ObjectId) {
+    if (!isLoggedIn) return;
+
     await fetch("/api/carpool", {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
@@ -54,6 +58,8 @@ export default function DriverList() {
   }
 
   async function getCarpoolList() {
+    if (!isLoggedIn) return;
+
     const res = await fetch(`/api/carpool?driverId=${userId}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
@@ -68,8 +74,6 @@ export default function DriverList() {
   }
 
   useEffect(() => {
-    if (!isLoggedIn) return;
-
     getCarpoolList();
   }, [isLoggedIn]);
 
