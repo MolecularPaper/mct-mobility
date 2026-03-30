@@ -1,11 +1,12 @@
 import { Router } from "express";
+import { authGuard } from "@/middleware/authGuard";
 import { connectToDatabase } from "@/db/db";
 import { Carpool } from "@/db/table";
 
 const carpoolRouter = Router();
 
 // 생성
-carpoolRouter.post("/api/carpool", async (req, res) => {
+carpoolRouter.post("/api/carpool", authGuard, async (req, res) => {
   try {
     const { db } = await connectToDatabase();
     const { driver_id, passengers_id, departure, destination, departureTime } =
@@ -30,7 +31,7 @@ carpoolRouter.post("/api/carpool", async (req, res) => {
 });
 
 // 목록 조회
-carpoolRouter.get("/api/carpool", async (_req, res) => {
+carpoolRouter.get("/api/carpool", authGuard, async (_req, res) => {
   try {
     const { db } = await connectToDatabase();
     const carpools = await db.collection("Carpool").find({}).toArray();

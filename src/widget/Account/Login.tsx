@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useUser } from "@/types/user";
 
 import Input from "@/components/Input";
 import Button from "@/components/Button";
@@ -9,14 +8,39 @@ import { AccountChildProps } from "./Account";
 export default function Login({ setActiveLoginPage }: AccountChildProps) {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const [messageColor, setMessageColor] = useState("black");
 
-  const login = useUser((state) => state.login);
+  async function RequestLogin() {
+    setMessageColor("red");
+    if (!id || !password) {
+      setMessage("필수 입력값이 입력되지 않았습니다.");
+      return;
+    }
 
-  function RequestLogin() {
-    console.log("로그인 요청");
-    login("abc", "임시");
+    setMessageColor("black");
+    setMessage("로그인 시도중...");
+
+    const res = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: id, password: password }),
+      credentials: "include",
+    });
+
+    if (res.ok) {
+      setMessage("로그인 성공");
+      return;
+    }
+
+    setMessageColor("red-500");
+    if (res.status === 401) {
+      setMessage("아이디 또는 비밀번호가 다릅니다.");
+      return;
+    }
+
+    setMessage("오류, 다시 시도해주세요");
   }
-  function ResponseLogin() {}
 
   return (
     <div className="w-96 h-fit min-h-75 bg-white flex flex-col p-8 rounded-xl shadow-md">
@@ -38,6 +62,7 @@ export default function Login({ setActiveLoginPage }: AccountChildProps) {
           className:
             "flex-1 rounded-lg bg-gray-100 px-3 py-2.5 outline-none focus:ring-2 focus:ring-blue-400",
           placeholder: "비밀번호",
+          type: "password",
           onChange: (e) => {
             setPassword(e.target.value);
           },
@@ -48,6 +73,9 @@ export default function Login({ setActiveLoginPage }: AccountChildProps) {
         onClick={RequestLogin}>
         로그인
       </Button>
+      {message === "" ? null : (
+        <span className={`text-${messageColor}`}>{message}</span>
+      )}
       <button
         className="cursor-pointer self-center mt-4 text-[13px] text-gray-500"
         onClick={() => setActiveLoginPage(false)}>

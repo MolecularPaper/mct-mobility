@@ -1,36 +1,24 @@
 import { Router } from "express";
+import { authGuard } from "@/middleware/authGuard";
 import { connectToDatabase } from "@/db/db";
-import { User } from "@/db/table";
 
 const userRouter = Router();
 
-// 생성
-userRouter.post("/api/users", async (req, res) => {
+// 단건 조회
+userRouter.get("/api/users/:id", authGuard, async (req, res) => {
   try {
     const { db } = await connectToDatabase();
-    const { id, password } = req.body;
+    const { id } = req.params;
 
-    const user: User = {
-      id,
-      password, // 실제 서비스에선 bcrypt 등으로 해시 처리 필요
-      createdAt: new Date(),
-    };
+    const user = await db.collection("User").findOne({ id }); // id 필드로 조회
 
-    const result = await db.collection("User").insertOne(user);
-    res.json({ success: true, insertedId: result.insertedId });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json({ success: true, data: user });
   } catch (err) {
-    res.status(500).json({ error: "Failed to create user" });
-  }
-});
-
-// 목록 조회
-userRouter.get("/api/users", async (_req, res) => {
-  try {
-    const { db } = await connectToDatabase();
-    const users = await db.collection("User").find({}).toArray();
-    res.json(users);
-  } catch (err) {
-    res.status(500).json({ error: "Failed to fetch users" });
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 

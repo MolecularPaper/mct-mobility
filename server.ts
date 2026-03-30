@@ -1,7 +1,10 @@
+import "dotenv/config";
 import fs from "node:fs/promises";
 import express from "express";
 import { Transform } from "node:stream";
+import cookieParser from "cookie-parser";
 
+import authRouter from "./src/routes/auth";
 import taxiRouter from "./src/routes/taxi";
 import carpoolRouter from "./src/routes/carpool";
 import userRouter from "./src/routes/user";
@@ -40,6 +43,8 @@ if (!isProduction) {
 }
 
 app.use(express.json());
+app.use(cookieParser());
+app.use(authRouter);
 app.use(userRouter);
 app.use(carpoolRouter);
 app.use(taxiRouter);

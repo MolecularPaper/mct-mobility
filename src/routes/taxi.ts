@@ -1,11 +1,12 @@
 import { Router } from "express";
+import { authGuard } from "@/middleware/authGuard";
 import { connectToDatabase } from "@/db/db";
 import { Taxi } from "@/db/table";
 
 const taxiRouter = Router();
 
 // 생성
-taxiRouter.post("/api/taxi", async (req, res) => {
+taxiRouter.post("/api/taxi", authGuard, async (req, res) => {
   try {
     const { db } = await connectToDatabase();
     const { passengers_id, departure, destination, departureTime } = req.body;
@@ -26,7 +27,7 @@ taxiRouter.post("/api/taxi", async (req, res) => {
 });
 
 // 목록 조회
-taxiRouter.get("/api/taxi", async (_req, res) => {
+taxiRouter.get("/api/taxi", authGuard, async (_req, res) => {
   try {
     const { db } = await connectToDatabase();
     const taxis = await db.collection("Taxi").find({}).toArray();

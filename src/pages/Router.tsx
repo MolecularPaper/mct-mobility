@@ -1,7 +1,6 @@
 // src/App.tsx
 import { Routes, Route } from "react-router-dom";
-
-import { useUser } from "@/types/user";
+import { useAuth } from "@/hooks/authHook";
 
 import Modal from "@/components/Modal";
 import Account from "@/widget/Account/Account";
@@ -13,11 +12,16 @@ import Passenger from "./Passenger";
 import Taxi from "./Taxi";
 
 export default function Router() {
-  const isLogin = useUser((state) => state.isLogin);
+  const { isLoggedIn } = useAuth();
+
+  if (isLoggedIn === null) return <></>;
+
+  if (!isLoggedIn) {
+    return <Modal active={!isLoggedIn} Child={Account} />;
+  }
 
   return (
     <div>
-      <Modal active={!isLogin} Child={Account} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/driver" element={<Driver />} />
