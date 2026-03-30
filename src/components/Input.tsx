@@ -20,7 +20,7 @@ export default function Input({
         "flex flex-row justify-center items-center",
         rest?.className,
       )}>
-      {label ?? (
+      {label && (
         <p {...labelProps} className={twMerge("", labelProps?.className)}>
           {label}
         </p>
