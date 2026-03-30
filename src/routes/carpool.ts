@@ -110,20 +110,26 @@ carpoolRouter.patch("/api/carpool", authGuard, async (req, res) => {
 carpoolRouter.get("/api/carpool", authGuard, async (req, res) => {
   try {
     const { db } = await connectToDatabase();
-    const { driverId } = req.query;
+    const { driverId, excludeDriverId, availableOnly } = req.query;
+
+    const filter: Record<string, unknown> = {};
 
     if (driverId) {
-      const carpools = await db
-        .collection("Carpool")
-        .find({
-          driver_id: driverId,
-        })
-        .toArray();
-
-      return res.json(carpools);
+      filter.driver_id = driverId;
     }
 
-    const carpools = await db.collection("Carpool").find({}).toArray();
+    if (excludeDriverId) {
+      filter.driver_id = {
+        ...((filter.driver_id as object) ?? {}),
+        $ne: excludeDriverId,
+      };
+    }
+
+    if (availableOnly === "true") {
+      filter.$expr = { $lt: [{ $size: "$passengers_ids" }, "$max_passenger"] };
+    }
+
+    const carpools = await db.collection("Carpool").find(filter).toArray();
     res.json(carpools);
   } catch (err) {
     res.status(500).json({ error: "Failed to get carpools" });

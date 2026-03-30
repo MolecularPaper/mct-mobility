@@ -25,7 +25,12 @@ function PassengerList() {
   async function getCarpoolList() {
     if (!isLoggedIn) return;
 
-    const res = await fetch("/api/carpool", {
+    const params = new URLSearchParams({
+      excludeDriverId: userId ?? "",
+      availableOnly: "true",
+    });
+
+    const res = await fetch(`/api/carpool?${params}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -76,14 +81,8 @@ function PassengerList() {
     }
   }
 
-  function filterCarpoolList(carpool: Carpool): JSX.Element | undefined {
+  function renderCarpoolItem(carpool: Carpool): JSX.Element | undefined {
     if (!isLoggedIn || !userId) return;
-
-    if (
-      carpool.passengers_ids.length >= carpool.max_passenger ||
-      carpool.driver_id === userId
-    )
-      return;
 
     if (carpool.passengers_ids.includes(userId)) {
       return (
@@ -156,7 +155,7 @@ function PassengerList() {
       </div>
 
       <div className="flex flex-1 flex-col gap-3 overflow-y-auto">
-        {carpoolList.map(filterCarpoolList)}
+        {carpoolList.map(renderCarpoolItem)}
       </div>
     </div>
   );
