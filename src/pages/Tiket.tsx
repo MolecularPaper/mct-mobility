@@ -17,6 +17,9 @@ interface TiketProps {
   onCardClick?: () => void;
 }
 
+/** 텍스트 최소 크기 (rem) */
+const MIN_FONT_SIZE_REM = 0.7;
+
 /**
  * 카풀 탑승 카드 컴포넌트
  * 출발지, 도착지, 출발 시간을 표시하고 탑승 신청 버튼을 제공한다.
@@ -34,13 +37,14 @@ export default function TiketCard({
     <div
       className="flex items-center justify-between gap-4 rounded-lg border border-gray-300 bg-white p-4 pr-3 cursor-pointer hover:bg-gray-50"
       onClick={onCardClick}>
-      <div className="flex w-fit shrink-0 flex-col items-center gap-1">
-        {driverId && <p>운전자: {driverId}</p>}
-        <p className="m-0 text-sm leading-relaxed text-neutral-800">
-          {departure ?? ""}
-          <br />
+      <div className="flex w-fit shrink-0 flex-col items-center gap-1 min-w-0 flex-1 overflow-hidden">
+        {driverId && <p className="truncate w-full">운전자: {driverId}</p>}
+        <p
+          className="m-0 leading-relaxed text-neutral-800 w-full"
+          style={{ fontSize: `clamp(${MIN_FONT_SIZE_REM}rem, 2vw, 0.875rem)` }}>
+          <span className="block truncate">{departure ?? ""}</span>
           {"-> "}
-          {arrival ?? ""}
+          <span className="block truncate">{arrival ?? ""}</span>
         </p>
       </div>
       <div className="mr-1 flex w-fit shrink-0 flex-col items-center gap-1">
