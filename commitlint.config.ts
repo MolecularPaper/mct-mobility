@@ -20,7 +20,7 @@ export default {
     "subject-case": [
       RuleConfigSeverity.Error,
       "never",
-      ["sentence-case", "start-case", "pascal-case", "upper-case"],
+      ["pascal-case", "upper-case"],
     ] as [RuleConfigSeverity, RuleConfigCondition, TargetCaseType[]],
     "subject-empty": [RuleConfigSeverity.Error, "never"] as const,
     "subject-full-stop": [RuleConfigSeverity.Error, "never", "."] as const,
