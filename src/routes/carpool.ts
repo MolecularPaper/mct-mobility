@@ -14,7 +14,7 @@ carpoolRouter.post("/api/carpool", authGuard, async (req, res) => {
     const { driverId, maxPassenger, departure, destination, departureTime } =
       req.body;
 
-    if (!Number.isInteger(maxPassenger) || maxPassenger < 0) {
+    if (!Number.isInteger(maxPassenger) || maxPassenger <= 0) {
       res
         .status(400)
         .json({ error: "The value of `max_passenger` is invalid" });
