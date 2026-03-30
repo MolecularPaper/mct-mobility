@@ -21,6 +21,16 @@ carpoolRouter.post("/api/carpool", authGuard, async (req, res) => {
       return;
     }
 
+    if (!departure || !destination) {
+      res.status(400).json({ error: "Departure and destination are required" });
+      return;
+    }
+
+    if (new Date(departureTime) < getKST()) {
+      res.status(400).json({ error: "Departure time must be in the future" });
+      return;
+    }
+
     const carpool: Carpool = {
       driver_id: driverId,
       passengers_ids: new Array(),
@@ -71,7 +81,14 @@ carpoolRouter.patch("/api/carpool", authGuard, async (req, res) => {
       return res.status(400).json({ error: "Carpool has already departed" });
     }
 
+    if (carpool.driver_id === passengerId) {
+      return res.status(400).json({ error: "Driver cannot join as passenger" });
+    }
+
     if (remove) {
+      if (!carpool.passengers_ids.includes(passengerId)) {
+        return res.status(400).json({ error: "Passenger not found in list" });
+      }
       const result = await db
         .collection("Carpool")
         .updateOne(
