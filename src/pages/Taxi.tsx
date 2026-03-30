@@ -1,15 +1,103 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { ObjectId } from "mongodb";
 
+import { useAuthInfo } from "@/hooks";
 import { getKSTIsoString } from "@/utils/date";
 import Button from "@/components/Button";
+import type { Taxi as TaxiRecord } from "@/db/table";
 
 import homeIcon from "@/assets/home.svg";
 
+/** 서버에서 aggregation으로 내려오는 Taxi + status */
+interface TaxiWithStatus extends TaxiRecord {
+  status: "pending" | "approved" | "rejected";
+}
+
+/** 승인 상태별 라벨 */
+const STATUS_LABEL: Record<TaxiWithStatus["status"], string> = {
+  pending: "대기중",
+  approved: "승인",
+  rejected: "거절",
+};
+
+/** 승인 상태별 텍스트 색상 */
+const STATUS_COLOR: Record<TaxiWithStatus["status"], string> = {
+  pending: "text-gray-500",
+  approved: "text-green-600",
+  rejected: "text-red-500",
+};
+
+/** 택시 예약 페이지 */
 export default function Taxi() {
+  const { isLoggedIn, userId } = useAuthInfo();
+
   const [departure, setDeparture] = useState("");
   const [destination, setDestination] = useState("");
   const [departureTime, setDepartureTime] = useState(getKSTIsoString());
+  const [taxiList, setTaxiList] = useState<TaxiWithStatus[]>([]);
+
+  /** 택시 예약 목록 조회 */
+  async function getTaxiList() {
+    if (!isLoggedIn) return;
+
+    const res = await fetch(`/api/taxi?passengerId=${userId}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    });
+
+    if (!res.ok || !res.body) return;
+
+    const list: TaxiWithStatus[] = await res.json();
+    setTaxiList(list);
+  }
+
+  /** 택시 예약 등록 */
+  async function postTaxi() {
+    if (!isLoggedIn) return;
+
+    const res = await fetch("/api/taxi", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        passengers_id: userId,
+        departure,
+        destination,
+        departureTime,
+      }),
+      credentials: "include",
+    });
+
+    if (!res.ok) {
+      alert("등록할 수 없습니다, 입력값을 확인해주세요!");
+      return;
+    }
+
+    setDeparture("");
+    setDestination("");
+    setDepartureTime(getKSTIsoString());
+
+    await getTaxiList();
+  }
+
+  /** 택시 예약 삭제 */
+  async function removeTaxi(objectId?: ObjectId) {
+    if (!isLoggedIn) return;
+
+    await fetch("/api/taxi", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ objectId }),
+      credentials: "include",
+    });
+
+    await getTaxiList();
+  }
+
+  useEffect(() => {
+    getTaxiList();
+  }, [isLoggedIn]);
 
   return (
     <div className="mx-auto flex h-screen flex-col bg-gray-50">
@@ -55,7 +143,9 @@ export default function Taxi() {
         </div>
       </div>
       <div className="px-4 pb-6 pt-3">
-        <Button className="w-full rounded-xl bg-blue-400 border-none py-4 text-lg font-bold text-white hover:bg-blue-500 focus:bg-blue-500">
+        <Button
+          onClick={postTaxi}
+          className="w-full rounded-xl bg-blue-400 border-none py-4 text-lg font-bold text-white hover:bg-blue-500 focus:bg-blue-500">
           택시 호출하기
         </Button>
       </div>
@@ -64,7 +154,42 @@ export default function Taxi() {
         <span className="flex-1 shrink-0 text-center">출발-&gt;도착</span>
         <span className="mr-5 w-20">승인 여부</span>
       </div>
-      <div className="flex flex-1 flex-col gap-3 overflow-y-auto"></div>
+      <div className="flex flex-1 flex-col gap-3 overflow-y-auto p-4">
+        {taxiList.length > 0 ? (
+          taxiList.map((taxi) => (
+            <div
+              key={taxi._id?.toString()}
+              className="flex items-center gap-4 rounded-lg border border-gray-300 bg-white p-4">
+              <span className="w-20 text-xs font-bold text-neutral-900">
+                {new Date(taxi.departureTime)
+                  .toISOString()
+                  .slice(0, 16)
+                  .replace("T", " ")}
+              </span>
+              <p
+                className="m-0 flex-1 leading-relaxed text-neutral-800 min-w-0 text-center"
+                style={{ fontSize: "clamp(0.75rem, 2vw, 1rem)" }}>
+                <span className="block truncate">{taxi.departure}</span>
+                {"-> "}
+                <span className="block truncate">{taxi.destination}</span>
+              </p>
+              <div>
+                <p
+                  className={`text-sm text-center ${STATUS_COLOR[taxi.status]}`}>
+                  {STATUS_LABEL[taxi.status]}
+                </p>
+                <Button
+                  onClick={() => removeTaxi(taxi._id)}
+                  className="mt-3 shrink-0 rounded-full bg-red-400 border-none px-4 py-1.5 text-sm font-bold text-white hover:bg-red-500 focus:bg-red-500">
+                  삭제
+                </Button>
+              </div>
+            </div>
+          ))
+        ) : (
+          <p className="text-center text-gray-400">예약 내역이 없습니다</p>
+        )}
+      </div>
     </div>
   );
 }

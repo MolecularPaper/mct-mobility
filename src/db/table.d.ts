@@ -26,3 +26,11 @@ export interface Taxi {
   departureTime: Date;
   createdAt: Date;
 }
+
+export interface TaxiReservation {
+  _id?: ObjectId;
+  taxi_id: ObjectId; // Taxi 컬렉션의 _id 참조
+  status: "pending" | "approved" | "rejected"; // 승인 상태
+  processedAt?: Date; // 승인/거절 처리 시각
+  createdAt: Date;
+}

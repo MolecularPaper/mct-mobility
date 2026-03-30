@@ -33,6 +33,11 @@ async function setupIndexes() {
   await db
     .collection("Taxi")
     .createIndex({ departureTime: 1 }, { expireAfterSeconds: 0 });
+
+  await db.collection("TaxiReservation").createIndex({ taxi_id: 1 });
+  await db
+    .collection("TaxiReservation")
+    .createIndex({ taxi_id: 1, requester_id: 1 }, { unique: true });
 }
 
 setupIndexes();
