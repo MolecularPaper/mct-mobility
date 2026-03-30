@@ -13,13 +13,12 @@ import Taxi from "./Taxi";
 
 export default function Router() {
   const { isLoggedIn } = useAuthInfo();
+  useAuthRefresh(isLoggedIn);
 
   if (isLoggedIn === null) return <></>;
   if (!isLoggedIn) {
     return <Modal active={!isLoggedIn} Child={Account} />;
   }
-
-  useAuthRefresh();
 
   return (
     <div>

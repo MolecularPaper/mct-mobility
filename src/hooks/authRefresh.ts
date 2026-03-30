@@ -11,7 +11,7 @@ const ACTIVITY_EVENTS = [
   "touchstart",
 ];
 
-export function useAuthRefresh() {
+export function useAuthRefresh(isLoggedIn: boolean | null) {
   const lastActivityRef = useRef<number>(Date.now());
   const refreshTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const logoutTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -33,6 +33,8 @@ export function useAuthRefresh() {
   }
 
   useEffect(() => {
+    if (!isLoggedIn) return;
+    
     ACTIVITY_EVENTS.forEach((event) => {
       window.addEventListener(event, resetTimer, { passive: true });
     });
