@@ -27,6 +27,12 @@ async function setupIndexes() {
   const { db } = await connectToDatabase(MONGODB_ADMIN_URI);
 
   await db.collection("User").createIndex({ id: 1 }, { unique: true });
+  await db
+    .collection("Carpool")
+    .createIndex({ departureTime: 1 }, { expireAfterSeconds: 0 });
+  await db
+    .collection("Taxi")
+    .createIndex({ departureTime: 1 }, { expireAfterSeconds: 0 });
 }
 
 setupIndexes();
