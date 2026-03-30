@@ -30,6 +30,7 @@ export default function Login({ setActiveLoginPage }: AccountChildProps) {
 
     if (res.ok) {
       setMessage("로그인 성공");
+      window.location.reload();
       return;
     }
 
