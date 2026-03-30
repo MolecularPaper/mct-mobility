@@ -30,6 +30,14 @@ function PassengerList() {
       availableOnly: "true",
     });
 
+    if (search.trim()) {
+      params.set("search", search.trim());
+    }
+
+    if (departureTime) {
+      params.set("departureTime", departureTime);
+    }
+
     const res = await fetch(`/api/carpool?${params}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
@@ -79,7 +87,7 @@ function PassengerList() {
     }
   }
 
-  function renderCarpoolItem(carpool: Carpool): JSX.Element | undefined {
+  function filterCarpoolItem(carpool: Carpool): JSX.Element | undefined {
     if (!isLoggedIn || !userId) return;
 
     if (carpool.passengers_ids.includes(userId)) {
@@ -155,7 +163,7 @@ function PassengerList() {
       </div>
 
       <div className="flex flex-1 flex-col gap-3 overflow-y-auto">
-        {carpoolList.map(renderCarpoolItem)}
+        {carpoolList.map(filterCarpoolItem)}
       </div>
     </div>
   );

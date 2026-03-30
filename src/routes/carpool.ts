@@ -128,11 +128,15 @@ carpoolRouter.patch("/api/carpool", authGuard, async (req, res) => {
   }
 });
 
+/** 유사값 검색 시 출발시간 허용 범위 (밀리초) */
+const DEPARTURE_TIME_RANGE_MS = 60 * 60 * 1000; // 1시간
+
 // 목록 조회
 carpoolRouter.get("/api/carpool", authGuard, async (req, res) => {
   try {
     const { db } = await connectToDatabase();
-    const { driverId, excludeDriverId, availableOnly } = req.query;
+    const { driverId, excludeDriverId, availableOnly, search, departureTime } =
+      req.query;
 
     const filter: Record<string, unknown> = {};
 
@@ -151,9 +155,33 @@ carpoolRouter.get("/api/carpool", authGuard, async (req, res) => {
       filter.$expr = { $lt: [{ $size: "$passengers_ids" }, "$max_passenger"] };
     }
 
-    filter.departureTime = { $gte: getKST() };
+    // 텍스트 검색 (단어 포함 여부)
+    if (typeof search === "string" && search.trim()) {
+      const words = search
+        .trim()
+        .split(/\s+/)
+        .map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+      const pattern = words.join("|");
+      const regex = { $regex: pattern, $options: "i" };
+      filter.$or = [{ departure: regex }, { destination: regex }];
+    }
 
-    const carpools = await db.collection("Carpool").find(filter).toArray();
+    // 시간 검색 (유사값: ±DEPARTURE_TIME_RANGE_MS 범위)
+    if (typeof departureTime === "string" && departureTime.trim()) {
+      const target = new Date(departureTime);
+      const min = new Date(target.getTime() - DEPARTURE_TIME_RANGE_MS);
+      const max = new Date(target.getTime() + DEPARTURE_TIME_RANGE_MS);
+      const now = getKST();
+      filter.departureTime = { $gte: min > now ? now : min, $lte: max };
+    } else {
+      filter.departureTime = { $gte: getKST() };
+    }
+
+    const carpools = await db
+      .collection("Carpool")
+      .find(filter)
+      .sort({ departureTime: 1 })
+      .toArray();
     res.json(carpools);
   } catch (err) {
     res.status(500).json({ error: "Failed to get carpools" });
