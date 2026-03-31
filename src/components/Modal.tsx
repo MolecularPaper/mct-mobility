@@ -5,17 +5,22 @@ interface ModalProps extends ComponentPropsWithoutRef<"div"> {
   active: boolean;
 }
 
-export default function Modal(props: ModalProps) {
-  if (!props.active) return null;
+export default function Modal({
+  active,
+  className,
+  children,
+  ...rest
+}: ModalProps) {
+  if (!active) return null;
 
   return (
     <div
-      {...props}
+      {...rest}
       className={twMerge(
         "fixed w-screen h-screen bg-black/30 z-50",
-        props.className,
+        className,
       )}>
-      {props.children}
+      {children}
     </div>
   );
 }
