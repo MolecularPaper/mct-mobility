@@ -51,7 +51,10 @@ export default function TaxiReservation() {
   }
 
   /** 예약 승인/거절 처리 */
-  async function updateStatus(taxiId: string, status: "approved" | "rejected") {
+  async function updateStatus(
+    taxiId: string,
+    status: "pending" | "approved" | "rejected",
+  ) {
     if (!isLoggedIn) return;
 
     const res = await fetch("/api/admin/taxi", {
@@ -130,7 +133,7 @@ export default function TaxiReservation() {
                 <p className={`text-sm font-bold ${STATUS_COLOR[taxi.status]}`}>
                   {STATUS_LABEL[taxi.status]}
                 </p>
-                {taxi.status === "pending" && (
+                {taxi.status === "pending" ? (
                   <div className="flex flex-1 gap-1">
                     <Button
                       onClick={() =>
@@ -145,6 +148,16 @@ export default function TaxiReservation() {
                       }
                       className="rounded-full bg-red-400 border-none px-3 py-1 text-xs font-bold text-white hover:bg-red-500 focus:bg-red-500">
                       거절
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="flex flex-1">
+                    <Button
+                      onClick={() =>
+                        updateStatus(taxi._id!.toString(), "pending")
+                      }
+                      className="rounded-full bg-red-400 border-none px-3 py-1 text-xs font-bold text-white hover:bg-orange-500 focus:bg-orange-500">
+                      취소
                     </Button>
                   </div>
                 )}

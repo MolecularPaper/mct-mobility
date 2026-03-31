@@ -217,7 +217,11 @@ taxiRouter.patch("/api/admin/taxi", authGuard, async (req, res) => {
       return res.status(400).json({ error: "taxiId and status are required" });
     }
 
-    if (status !== "approved" && status !== "rejected") {
+    if (
+      status !== "pending" &&
+      status !== "approved" &&
+      status !== "rejected"
+    ) {
       return res.status(400).json({ error: "Invalid status value" });
     }
 
