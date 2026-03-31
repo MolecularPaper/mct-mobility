@@ -11,9 +11,10 @@ export default function Modal(props: ModalProps) {
   return (
     <div
       {...props}
-      className={
-        (twMerge("fixed w-screen h-screen bg-black/30 z-50"), props.className)
-      }>
+      className={twMerge(
+        "fixed w-screen h-screen bg-black/30 z-50",
+        props.className,
+      )}>
       {props.children}
     </div>
   );
