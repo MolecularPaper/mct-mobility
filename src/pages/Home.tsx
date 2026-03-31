@@ -36,50 +36,29 @@ export default function Home() {
             className="w-auto h-full aspect-8/6 object-cover rounded-lg"
           />
         </div>
-        {/* 하단 분기 영역 */}
-        <div className="flex flex-1 no-underline text-white text-[20px] font-bold [-webkit-text-stroke:1.3px_black] [paint-order:stroke_fill]">
-          <div className="flex flex-1 flex-col items-center justify-center">
+        <div className="flex flex-1 m-4 mt-0 justify-center">
+          <div className="flex flex-1 flex-col gap-4 justify-start">
+            <p className="text-center text-xl">카풀</p>
             <Link
               to="/driver"
-              className="relative flex flex-1 flex-col w-full items-center justify-center cursor-pointer">
-              <img
-                src={driver}
-                alt="운전자"
-                className="absolute w-full h-full object-cover object-bottom-left"
-              />
-              <p className="z-2 drop-shadow-md">
-                함께 타고 가요
-                <br />
-              </p>
+              className="flex w-full justify-center cursor-pointer">
+              <img src={driver} alt="운전자" className="w-32 h-32" />
             </Link>
             <Link
               to="/passenger"
-              className="relative flex flex-1 flex-col w-full items-center justify-center cursor-pointer">
-              <img
-                src={passenger}
-                alt="승객"
-                className="absolute w-full h-full object-cover"
-              />
-              <p className="z-2 drop-shadow-md">
-                이쪽으로 가요
-                <br />
-              </p>
+              className="flex w-full justify-center cursor-pointer">
+              <img src={passenger} alt="승객" className="w-32 h-32" />
             </Link>
           </div>
-
-          <Link
-            to="/taxi"
-            className="relative flex flex-1 box-border items-center justify-center cursor-pointer">
-            <img
-              src={taxi}
-              alt="택시"
-              className="absolute w-full h-full object-cover object-right"
-            />
-            <p className="z-2 drop-shadow-md">
-              택시
-              <br />
-            </p>
-          </Link>
+          <div className="w-1 h-full ml-4 mr-4 bg-gray-700/40" />
+          <div className="flex flex-1 flex-col gap-4 justify-start">
+            <p className="text-center text-xl">택시</p>
+            <Link
+              to="/taxi"
+              className="flex w-full justify-center cursor-pointer">
+              <img src={taxi} alt="택시" className="w-32 h-32" />
+            </Link>
+          </div>
         </div>
       </div>
     </>
