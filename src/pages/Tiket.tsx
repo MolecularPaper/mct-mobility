@@ -42,8 +42,10 @@ export default function TiketCard({
         <p
           className="m-0 leading-relaxed text-neutral-800 w-full"
           style={{ fontSize: `clamp(${MIN_FONT_SIZE_REM}rem, 2vw, 0.875rem)` }}>
-          <span className="block truncate">{departure ?? ""}</span>
-          {"-> "}
+          <span className="block truncate">
+            {departure ?? ""}
+            {" ->"}
+          </span>
           <span className="block truncate">{arrival ?? ""}</span>
         </p>
       </div>
