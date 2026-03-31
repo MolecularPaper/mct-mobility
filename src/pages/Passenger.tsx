@@ -133,18 +133,19 @@ function PassengerList() {
 
   return (
     <>
-      <Modal
-        active={selectedCarpool !== null}
-        Child={PassengerListModal}
-        childProps={{
-          driverId: selectedCarpool?.driver_id ?? "",
-          departure: selectedCarpool?.departure ?? "",
-          destination: selectedCarpool?.destination ?? "",
-          passengers: selectedCarpool?.passengers_ids ?? [],
-          maxPassenger: selectedCarpool?.max_passenger ?? 0,
-          onClose: () => setSelectedCarpool(null),
-        }}
-      />
+      <Modal active={selectedCarpool !== null}>
+        <PassengerListModal
+          driverId={selectedCarpool?.driver_id ?? ""}
+          departure={selectedCarpool?.departure ?? ""}
+          destination={selectedCarpool?.destination ?? ""}
+          passengers={selectedCarpool?.passengers_ids ?? []}
+          maxPassenger={selectedCarpool?.max_passenger ?? 0}
+          onClose={() => setSelectedCarpool(null)}
+        />
+      </Modal>
+      <Modal active={formModalActive}>
+        <></>
+      </Modal>
       <div className="mx-auto flex h-screen flex-col gap-6 p-6 bg-gray-50">
         <div className="flex flex-row">
           <h1 className="text-2xl font-black text-neutral-900 flex-1">

@@ -18,7 +18,11 @@ export default function Router() {
 
   if (isLoggedIn === null) return <></>;
   if (!isLoggedIn) {
-    return <Modal active={!isLoggedIn} Child={Account} />;
+    return (
+      <Modal active={!isLoggedIn}>
+        <Account />
+      </Modal>
+    );
   }
 
   return (
