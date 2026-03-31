@@ -92,7 +92,7 @@ export default function DriverList() {
           driverId={selectedCarpool?.driver_id ?? ""}
           departure={selectedCarpool?.departure ?? ""}
           destination={selectedCarpool?.destination ?? ""}
-          passengers={selectedCarpool?.passengers_ids ?? []}
+          passengers={selectedCarpool?.passengers ?? []}
           maxPassenger={selectedCarpool?.max_passenger ?? 0}
           onClose={() => setSelectedCarpool(null)}
         />

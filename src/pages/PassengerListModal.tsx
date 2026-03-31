@@ -4,7 +4,7 @@ interface PassengerListModalProps {
   driverId: string;
   departure: string;
   destination: string;
-  passengers: string[];
+  passengers: { id: string; phone: string }[];
   maxPassenger: number;
   onClose: () => void;
 }
@@ -33,11 +33,11 @@ export default function PassengerListModal({
         </div>
         <ul className="flex flex-col gap-2 max-h-48 overflow-y-auto">
           {passengers.length > 0 ? (
-            passengers.map((id) => (
+            passengers.map((p) => (
               <li
-                key={id}
+                key={p.id}
                 className="rounded-lg bg-gray-100 px-3 py-2 text-sm text-neutral-800">
-                {id}
+                {p.id} ({p.phone})
               </li>
             ))
           ) : (
