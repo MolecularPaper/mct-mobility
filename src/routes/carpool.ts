@@ -192,8 +192,20 @@ carpoolRouter.get("/api/carpool", authGuard, async (req, res) => {
 
     const carpools = await db
       .collection("Carpool")
-      .find(filter)
-      .sort({ departureTime: 1 })
+      .aggregate([
+        { $match: filter },
+        {
+          $addFields: {
+            isJoined: { $in: [userId, "$passengers_ids"] }, // boolean 필드 추가
+          },
+        },
+        {
+          $sort: {
+            isJoined: -1, // true(1) → false(0) 내림차순이므로 등록된게 먼저
+            departureTime: 1, // 그 다음 출발시간 오름차순
+          },
+        },
+      ])
       .toArray();
     res.json(carpools);
   } catch (err) {
