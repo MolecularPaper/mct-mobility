@@ -29,6 +29,7 @@ function PassengerList() {
     if (!isLoggedIn) return;
 
     const params = new URLSearchParams({
+      userId: userId ?? "",
       excludeDriverId: userId ?? "",
       availableOnly: "true",
     });

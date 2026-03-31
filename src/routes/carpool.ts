@@ -135,8 +135,14 @@ const DEPARTURE_TIME_RANGE_MS = 60 * 60 * 1000; // 1시간
 carpoolRouter.get("/api/carpool", authGuard, async (req, res) => {
   try {
     const { db } = await connectToDatabase();
-    const { driverId, excludeDriverId, availableOnly, search, departureTime } =
-      req.query;
+    const {
+      userId,
+      driverId,
+      excludeDriverId,
+      availableOnly,
+      search,
+      departureTime,
+    } = req.query;
 
     const filter: Record<string, unknown> = {};
 
@@ -152,7 +158,10 @@ carpoolRouter.get("/api/carpool", authGuard, async (req, res) => {
     }
 
     if (availableOnly === "true") {
-      filter.$expr = { $lt: [{ $size: "$passengers_ids" }, "$max_passenger"] };
+      filter.$or = [
+        { $expr: { $lt: [{ $size: "$passengers_ids" }, "$max_passenger"] } },
+        { passengers_ids: { $in: [userId] } },
+      ];
     }
 
     // 텍스트 검색 (단어 포함 여부)
