@@ -165,6 +165,7 @@ export default function DriverList() {
             <TiketCard
               carpool={carpool}
               buttonText="삭제"
+              buttonClassName="bg-red-500"
               onCardClick={() => setSelectedCarpool(carpool)}
               onClick={() => {
                 removeCarpool(carpool._id);

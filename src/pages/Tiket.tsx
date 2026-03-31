@@ -1,5 +1,6 @@
 import Button from "@/components/Button";
 import { Carpool } from "@/db/table";
+import { twMerge } from "tailwind-merge";
 
 /**
  * @param departure     출발지
@@ -12,6 +13,7 @@ interface TiketProps {
   carpool: Carpool;
   showDriverId?: boolean;
   buttonText: string;
+  buttonClassName?: string;
   onClick?: () => void;
   onCardClick?: () => void;
 }
@@ -26,6 +28,7 @@ const MIN_FONT_SIZE_REM = 0.7;
 export default function TiketCard({
   carpool,
   buttonText,
+  buttonClassName,
   showDriverId,
   onClick,
   onCardClick,
@@ -63,7 +66,10 @@ export default function TiketCard({
             : ""}
         </span>
         <Button
-          className="mt-2 rounded-full bg-[#42c8f4] border-none px-5 py-2 font-bold text-white hover:bg-[#2bb5e0] focus:bg-[#22a0cc]"
+          className={twMerge(
+            "mt-2 rounded-full bg-[#42c8f4] border-none px-5 py-2 font-bold text-white hover:bg-[#2bb5e0] focus:bg-[#22a0cc]",
+            buttonClassName,
+          )}
           onClick={(e) => {
             e.stopPropagation();
             onClick?.();
