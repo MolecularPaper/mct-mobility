@@ -19,13 +19,20 @@ export default function Home() {
   return (
     <>
       <div className="flex flex-col h-screen overflow-hidden">
-        <div className="w-full mt-8 flex justify-center items-center">
-          <span className="flex-1 text-4xl font-bold text-center h-min min-h-min">
-            상승 모빌리티
-          </span>
-          <div className="mr-6 flex flex-col">
+        <div className="w-full p-4 flex justify-center items-center bg-blue-300">
+          <div className="flex-1">
+            <span className="text-4xl font-bold text-left h-min min-h-min">
+              상승 GO!
+            </span>
+            <p className="text-[12px]">
+              {"빠르고, 함께하고, 비용도 아끼는 스마트한 상승 인(人)"}
+            </p>
+          </div>
+          <div className="flex flex-col">
             <p>유저: {userId}</p>
-            <Button className="text-[12px] mt-1 p-0.5" onClick={logout}>
+            <Button
+              className="w-min-fit mt-1 p-0.5 text-[0.75rem]"
+              onClick={logout}>
               로그아웃
             </Button>
           </div>
@@ -36,50 +43,29 @@ export default function Home() {
             className="w-auto h-full aspect-8/6 object-cover rounded-lg"
           />
         </div>
-        {/* 하단 분기 영역 */}
-        <div className="flex flex-1 no-underline text-white text-[20px] font-bold [-webkit-text-stroke:1.3px_black] [paint-order:stroke_fill]">
-          <div className="flex flex-1 flex-col items-center justify-center">
+        <div className="flex flex-1 m-4 mt-0 justify-center">
+          <div className="flex flex-1 flex-col gap-4 justify-start">
+            <p className="text-center text-xl">카풀</p>
             <Link
               to="/driver"
-              className="relative flex flex-1 flex-col w-full items-center justify-center cursor-pointer">
-              <img
-                src={driver}
-                alt="운전자"
-                className="absolute w-full h-full object-cover object-bottom-left"
-              />
-              <p className="z-2 drop-shadow-md">
-                함께 타고 가요
-                <br />
-              </p>
+              className="flex w-full justify-center cursor-pointer">
+              <img src={driver} alt="운전자" className="w-32 h-32" />
             </Link>
             <Link
               to="/passenger"
-              className="relative flex flex-1 flex-col w-full items-center justify-center cursor-pointer">
-              <img
-                src={passenger}
-                alt="승객"
-                className="absolute w-full h-full object-cover"
-              />
-              <p className="z-2 drop-shadow-md">
-                이쪽으로 가요
-                <br />
-              </p>
+              className="flex w-full justify-center cursor-pointer">
+              <img src={passenger} alt="승객" className="w-32 h-32" />
             </Link>
           </div>
-
-          <Link
-            to="/taxi"
-            className="relative flex flex-1 box-border items-center justify-center cursor-pointer">
-            <img
-              src={taxi}
-              alt="택시"
-              className="absolute w-full h-full object-cover object-right"
-            />
-            <p className="z-2 drop-shadow-md">
-              택시
-              <br />
-            </p>
-          </Link>
+          <div className="w-1 h-full ml-4 mr-4 bg-gray-700/40" />
+          <div className="flex flex-1 flex-col gap-4 justify-start">
+            <p className="text-center text-xl">택시</p>
+            <Link
+              to="/taxi"
+              className="flex w-full justify-center cursor-pointer">
+              <img src={taxi} alt="택시" className="w-32 h-32" />
+            </Link>
+          </div>
         </div>
       </div>
     </>

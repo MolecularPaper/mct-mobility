@@ -33,7 +33,7 @@ carpoolRouter.post("/api/carpool", authGuard, async (req, res) => {
 
     const carpool: Carpool = {
       driver_id: driverId,
-      passengers_ids: new Array(),
+      passengers: new Array(),
       max_passenger: maxPassenger,
       departure,
       destination,
@@ -68,7 +68,7 @@ carpoolRouter.delete("/api/carpool", authGuard, async (req, res) => {
 carpoolRouter.patch("/api/carpool", authGuard, async (req, res) => {
   try {
     const { db } = await connectToDatabase();
-    const { objectId, passengerId, remove } = req.body;
+    const { objectId, passengerId, phoneNumber, remove } = req.body;
 
     const carpool = await db
       .collection("Carpool")
@@ -86,39 +86,46 @@ carpoolRouter.patch("/api/carpool", authGuard, async (req, res) => {
     }
 
     if (remove) {
-      if (!carpool.passengers_ids.includes(passengerId)) {
+      if (
+        !carpool.passengers.some((p: { id: string }) => p.id === passengerId)
+      ) {
         return res.status(400).json({ error: "Passenger not found in list" });
       }
-      const result = await db
-        .collection("Carpool")
-        .updateOne(
-          { _id: new ObjectId(objectId) },
-          { $pull: { passengers_ids: passengerId } },
-        );
+      const result = await db.collection<Carpool>("Carpool").updateOne(
+        { _id: new ObjectId(objectId) },
+        {
+          $pull: { passengers: { id: passengerId } } as unknown as Record<
+            string,
+            unknown
+          >,
+        },
+      );
       return res
         .status(200)
         .json({ success: true, modifiedCount: result.modifiedCount });
     }
 
-    if (carpool.passengers_ids.length >= carpool.max_passenger) {
+    if (carpool.passengers.length >= carpool.max_passenger) {
       return res.status(400).json({
         error: "Maximum passengers reached",
         max: carpool.max_passenger,
-        current: carpool.passengers_ids.length,
+        current: carpool.passengers.length,
       });
     }
 
     // 이미 등록된 승객인지 확인
-    if (carpool.passengers_ids.includes(passengerId)) {
+    if (carpool.passengers.some((p: { id: string }) => p.id === passengerId)) {
       return res.status(409).json({ error: "Already registered passenger" });
     }
 
-    const result = await db
-      .collection("Carpool")
-      .updateOne(
-        { _id: new ObjectId(objectId) },
-        { $push: { passengers_ids: passengerId } },
-      );
+    const result = await db.collection<Carpool>("Carpool").updateOne(
+      { _id: new ObjectId(objectId) },
+      {
+        $push: {
+          passengers: { id: passengerId, phone: phoneNumber },
+        } as unknown as Record<string, unknown>,
+      },
+    );
 
     res
       .status(200)
@@ -135,8 +142,14 @@ const DEPARTURE_TIME_RANGE_MS = 60 * 60 * 1000; // 1시간
 carpoolRouter.get("/api/carpool", authGuard, async (req, res) => {
   try {
     const { db } = await connectToDatabase();
-    const { driverId, excludeDriverId, availableOnly, search, departureTime } =
-      req.query;
+    const {
+      userId,
+      driverId,
+      excludeDriverId,
+      availableOnly,
+      search,
+      departureTime,
+    } = req.query;
 
     const filter: Record<string, unknown> = {};
 
@@ -152,7 +165,10 @@ carpoolRouter.get("/api/carpool", authGuard, async (req, res) => {
     }
 
     if (availableOnly === "true") {
-      filter.$expr = { $lt: [{ $size: "$passengers_ids" }, "$max_passenger"] };
+      filter.$or = [
+        { $expr: { $lt: [{ $size: "$passengers" }, "$max_passenger"] } },
+        { "passengers.id": { $in: [userId] } },
+      ];
     }
 
     // 텍스트 검색 (단어 포함 여부)
@@ -183,8 +199,20 @@ carpoolRouter.get("/api/carpool", authGuard, async (req, res) => {
 
     const carpools = await db
       .collection("Carpool")
-      .find(filter)
-      .sort({ departureTime: 1 })
+      .aggregate([
+        { $match: filter },
+        {
+          $addFields: {
+            isJoined: { $in: [userId, "$passengers.id"] }, // boolean 필드 추가
+          },
+        },
+        {
+          $sort: {
+            isJoined: -1, // true(1) → false(0) 내림차순이므로 등록된게 먼저
+            departureTime: 1, // 그 다음 출발시간 오름차순
+          },
+        },
+      ])
       .toArray();
     res.json(carpools);
   } catch (err) {

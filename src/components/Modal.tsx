@@ -1,21 +1,26 @@
-import { ComponentType } from "react";
+import { ComponentPropsWithoutRef } from "react";
+import { twMerge } from "tailwind-merge";
 
-interface ModalProps<T extends object> {
+interface ModalProps extends ComponentPropsWithoutRef<"div"> {
   active: boolean;
-  Child: ComponentType<T>;
-  childProps?: T;
 }
 
-export default function Modal<T extends object>({
+export default function Modal({
   active,
-  Child,
-  childProps,
-}: ModalProps<T>) {
+  className,
+  children,
+  ...rest
+}: ModalProps) {
   if (!active) return null;
 
   return (
-    <div className="fixed w-screen h-screen bg-black/30 z-50">
-      <Child {...(childProps as T)} />
+    <div
+      {...rest}
+      className={twMerge(
+        "fixed w-screen h-screen bg-black/30 z-50",
+        className,
+      )}>
+      {children}
     </div>
   );
 }

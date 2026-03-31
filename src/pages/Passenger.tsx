@@ -1,5 +1,5 @@
 //승객용 페이지
-import { JSX, useEffect, useState } from "react";
+import { JSX, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ObjectId } from "mongodb";
 
@@ -22,6 +22,11 @@ function PassengerList() {
 
   const [search, setSearch] = useState("");
   const [departureTime, setDepartureTime] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+
+  const [formModalActive, setFromModalActive] = useState(false); //추가 입력 폼 모달 활성화 여부
+  const formModalObjectId = useRef<ObjectId | undefined>(undefined);
+
   const [carpoolList, setCarpoolList] = useState(new Array<Carpool>());
   const [selectedCarpool, setSelectedCarpool] = useState<Carpool | null>(null);
 
@@ -29,6 +34,7 @@ function PassengerList() {
     if (!isLoggedIn) return;
 
     const params = new URLSearchParams({
+      userId: userId ?? "",
       excludeDriverId: userId ?? "",
       availableOnly: "true",
     });
@@ -54,24 +60,27 @@ function PassengerList() {
     setCarpoolList(list);
   }
 
-  async function patchCarpoolPassenger(
-    passengerId: string,
-    objectId?: ObjectId,
-    remove?: boolean,
-  ) {
+  async function patchCarpoolPassenger(passengerId: string, remove?: boolean) {
     if (!isLoggedIn) return;
 
     const res = await fetch(`/api/carpool`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
-      body: JSON.stringify({ objectId, passengerId, remove }),
+      body: JSON.stringify({
+        objectId: formModalObjectId.current,
+        passengerId,
+        phoneNumber,
+        remove,
+      }),
     });
 
     if (res.ok) {
       await getCarpoolList();
       return;
     }
+
+    console.error((await res.json()).error);
 
     // 에러 종류별 처리
     switch (res.status) {
@@ -91,35 +100,31 @@ function PassengerList() {
   }
 
   function filterCarpoolItem(carpool: Carpool): JSX.Element | undefined {
-    if (!isLoggedIn || !userId) return;
+    if (!isLoggedIn) return;
 
-    if (carpool.passengers_ids.includes(userId)) {
+    if (carpool.passengers.some((p) => p.id === (userId ?? ""))) {
       return (
         <TiketCard
-          key={carpool._id?.toString()}
-          driverId={carpool.driver_id}
-          departure={carpool.departure}
-          arrival={carpool.destination}
-          departureTime={carpool.departureTime}
+          carpool={carpool}
+          showDriverId={true}
           buttonText="등록해제"
           onCardClick={() => setSelectedCarpool(carpool)}
           onClick={() => {
-            patchCarpoolPassenger(userId, carpool._id, true);
+            formModalObjectId.current = carpool._id;
+            patchCarpoolPassenger(userId ?? "", true);
           }}
         />
       );
     } else {
       return (
         <TiketCard
-          key={carpool._id?.toString()}
-          driverId={carpool.driver_id}
-          departure={carpool.departure}
-          arrival={carpool.destination}
+          carpool={carpool}
+          showDriverId={true}
           buttonText="같이가요"
-          departureTime={carpool.departureTime}
           onCardClick={() => setSelectedCarpool(carpool)}
           onClick={() => {
-            patchCarpoolPassenger(userId, carpool._id);
+            formModalObjectId.current = carpool._id;
+            setFromModalActive(true);
           }}
         />
       );
@@ -132,18 +137,44 @@ function PassengerList() {
 
   return (
     <>
-      <Modal
-        active={selectedCarpool !== null}
-        Child={PassengerListModal}
-        childProps={{
-          driverId: selectedCarpool?.driver_id ?? "",
-          departure: selectedCarpool?.departure ?? "",
-          destination: selectedCarpool?.destination ?? "",
-          passengers: selectedCarpool?.passengers_ids ?? [],
-          maxPassenger: selectedCarpool?.max_passenger ?? 0,
-          onClose: () => setSelectedCarpool(null),
-        }}
-      />
+      <Modal active={selectedCarpool !== null}>
+        <PassengerListModal
+          driverId={selectedCarpool?.driver_id ?? ""}
+          departure={selectedCarpool?.departure ?? ""}
+          destination={selectedCarpool?.destination ?? ""}
+          passengers={selectedCarpool?.passengers ?? []}
+          maxPassenger={selectedCarpool?.max_passenger ?? 0}
+          onClose={() => setSelectedCarpool(null)}
+        />
+      </Modal>
+      <Modal active={formModalActive}>
+        <div className="w-screen h-screen flex justify-center items-center">
+          <div className="w-96 h-fit bg-white flex flex-col p-8 justify-center items-center rounded-xl shadow-md">
+            <input
+              type="text"
+              placeholder="연락받을 전화번호를 입력해주세요"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              className="w-full rounded-lg bg-gray-100 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-400"
+            />
+            <div className="flex w-full mt-4 gap-2">
+              <Button
+                onClick={() => {
+                  patchCarpoolPassenger(userId ?? "");
+                  setFromModalActive(false);
+                }}
+                className="flex-1 text-[14px] rounded-xl bg-blue-400 border-none font-bold text-white hover:bg-blue-500 focus:bg-blue-500">
+                확인
+              </Button>
+              <Button
+                onClick={() => setFromModalActive(false)}
+                className="flex-1 text-[14px] rounded-xl bg-blue-400 border-none font-bold text-white hover:bg-blue-500 focus:bg-blue-500">
+                취소
+              </Button>
+            </div>
+          </div>
+        </div>
+      </Modal>
       <div className="mx-auto flex h-screen flex-col gap-6 p-6 bg-gray-50">
         <div className="flex flex-row">
           <h1 className="text-2xl font-black text-neutral-900 flex-1">
