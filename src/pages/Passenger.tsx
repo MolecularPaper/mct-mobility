@@ -105,11 +105,8 @@ function PassengerList() {
     if (carpool.passengers.some((p) => p.id === (userId ?? ""))) {
       return (
         <TiketCard
-          key={carpool._id?.toString()}
-          driverId={carpool.driver_id}
-          departure={carpool.departure}
-          arrival={carpool.destination}
-          departureTime={carpool.departureTime}
+          carpool={carpool}
+          showDriverId={true}
           buttonText="등록해제"
           onCardClick={() => setSelectedCarpool(carpool)}
           onClick={() => {
@@ -121,12 +118,9 @@ function PassengerList() {
     } else {
       return (
         <TiketCard
-          key={carpool._id?.toString()}
-          driverId={carpool.driver_id}
-          departure={carpool.departure}
-          arrival={carpool.destination}
+          carpool={carpool}
+          showDriverId={true}
           buttonText="같이가요"
-          departureTime={carpool.departureTime}
           onCardClick={() => setSelectedCarpool(carpool)}
           onClick={() => {
             formModalObjectId.current = carpool._id;

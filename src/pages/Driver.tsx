@@ -163,10 +163,7 @@ export default function DriverList() {
         <div className="flex flex-1 flex-col gap-3 overflow-y-auto">
           {carpoolList.map((carpool) => (
             <TiketCard
-              key={carpool.driver_id}
-              departure={carpool.departure}
-              arrival={carpool.destination}
-              departureTime={carpool.departureTime}
+              carpool={carpool}
               buttonText="삭제"
               onCardClick={() => setSelectedCarpool(carpool)}
               onClick={() => {
