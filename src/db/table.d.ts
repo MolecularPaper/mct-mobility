@@ -7,10 +7,15 @@ export interface User {
   createdAt: Date;
 }
 
+export interface Passenger {
+  id: string;
+  phone: string;
+}
+
 export interface Carpool {
   _id?: ObjectId;
   driver_id: string; // primary key, ref: User.id
-  passengers: CarpoolPassenger[]; // ref: User.id (복수)
+  passengers: Passenger[]; // ref: User.id (복수)
   max_passenger: number; // 최대 승객 수
   departure: string;
   destination: string;
@@ -18,17 +23,13 @@ export interface Carpool {
   createdAt: Date;
 }
 
-export interface CarpoolPassenger {
-  id: string;
-  phone: string;
-}
-
 export interface Taxi {
   _id?: ObjectId;
-  passengers_id: string; // primary key, ref: User.id
+  passenger_id: string; // primary key, ref: User.id
   departure: string;
   destination: string;
   departureTime: Date;
+  passengerCount: number;
   createdAt: Date;
 }
 

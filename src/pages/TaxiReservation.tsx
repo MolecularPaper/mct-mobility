@@ -106,7 +106,7 @@ export default function TaxiReservation() {
               key={taxi._id?.toString()}
               className="flex items-center gap-3 rounded-lg border border-gray-300 bg-white p-4">
               <span className="w-16 truncate text-xs font-semibold text-neutral-700">
-                {taxi.passengers_id}
+                {taxi.passenger_id}
               </span>
               <span className="w-20 text-xs font-bold text-neutral-900">
                 {new Date(taxi.departureTime)

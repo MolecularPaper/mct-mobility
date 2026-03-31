@@ -35,6 +35,7 @@ export default function Taxi() {
   const [departure, setDeparture] = useState("");
   const [destination, setDestination] = useState("");
   const [departureTime, setDepartureTime] = useState(getKSTIsoString());
+  const [passengerCount, setPassengerCount] = useState(0);
   const [taxiList, setTaxiList] = useState<TaxiWithStatus[]>([]);
 
   /** 택시 예약 목록 조회 */
@@ -61,22 +62,25 @@ export default function Taxi() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        passengers_id: userId,
+        passengersId: userId,
         departure,
         destination,
         departureTime,
+        passengerCount,
       }),
       credentials: "include",
     });
 
     if (!res.ok) {
       alert("등록할 수 없습니다, 입력값을 확인해주세요!");
+      console.error((await res.json()).error);
       return;
     }
 
     setDeparture("");
     setDestination("");
     setDepartureTime(getKSTIsoString());
+    setPassengerCount(0);
 
     await getTaxiList();
   }
@@ -129,6 +133,17 @@ export default function Taxi() {
               placeholder="어디로 갈까요?"
               value={destination}
               onChange={(e) => setDestination(e.target.value)}
+              className="w-full rounded-lg bg-gray-100 px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-blue-400"
+            />
+            <input
+              type="text"
+              placeholder="몇명에서 가나요?"
+              value={passengerCount || ""}
+              onChange={(e) =>
+                setPassengerCount(
+                  parseInt(e.target.value.replace(/[^0-9]/g, "")),
+                )
+              }
               className="w-full rounded-lg bg-gray-100 px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-blue-400"
             />
             <input

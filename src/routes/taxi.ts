@@ -14,9 +14,21 @@ const MAX_DAILY_RESERVATIONS = 2;
 taxiRouter.post("/api/taxi", authGuard, async (req, res) => {
   try {
     const { db } = await connectToDatabase();
-    const { passengers_id, departure, destination, departureTime } = req.body;
+    const {
+      passengersId,
+      departure,
+      destination,
+      departureTime,
+      passengerCount,
+    } = req.body;
 
-    if (!departure || !destination || !departureTime || !passengers_id) {
+    if (
+      !departure ||
+      !destination ||
+      !departureTime ||
+      !passengersId ||
+      !passengerCount
+    ) {
       return res.status(400).json({ error: "All fields are required" });
     }
 
@@ -26,11 +38,17 @@ taxiRouter.post("/api/taxi", authGuard, async (req, res) => {
         .json({ error: "Departure time must be in the future" });
     }
 
+    if (passengerCount < 1) {
+      return res
+        .status(400)
+        .json({ error: "There must be at least one passenger" });
+    }
+
     const col = db.collection("Taxi");
 
     // 동일한 출발지, 목적지, 출발시간 중복 확인
     const duplicate = await col.findOne({
-      passengers_id,
+      passenger_id: passengersId,
       departure,
       destination,
       departureTime: new Date(departureTime),
@@ -41,7 +59,7 @@ taxiRouter.post("/api/taxi", authGuard, async (req, res) => {
 
     // 같은 출발시간 겹침 확인
     const sameTime = await col.findOne({
-      passengers_id,
+      passenger_id: passengersId,
       departureTime: new Date(departureTime),
     });
     if (sameTime) {
@@ -58,7 +76,7 @@ taxiRouter.post("/api/taxi", authGuard, async (req, res) => {
     dayEnd.setHours(23, 59, 59, 999);
 
     const dailyCount = await col.countDocuments({
-      passengers_id,
+      passenger_id: passengersId,
       departureTime: { $gte: dayStart, $lte: dayEnd },
     });
     if (dailyCount >= MAX_DAILY_RESERVATIONS) {
@@ -68,10 +86,11 @@ taxiRouter.post("/api/taxi", authGuard, async (req, res) => {
     }
 
     const taxi: Taxi = {
-      passengers_id,
+      passenger_id: passengersId,
       departure,
       destination,
       departureTime: new Date(departureTime),
+      passengerCount,
       createdAt: new Date(),
     };
 
@@ -103,7 +122,7 @@ taxiRouter.get("/api/taxi", authGuard, async (req, res) => {
     const taxis = await db
       .collection("Taxi")
       .aggregate([
-        { $match: { passengers_id: passengerId } },
+        { $match: { passenger_id: passengerId } },
         { $sort: { departureTime: 1 } },
         {
           $lookup: {
