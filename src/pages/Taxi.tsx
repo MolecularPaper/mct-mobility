@@ -184,8 +184,10 @@ export default function Taxi() {
               <p
                 className="m-0 flex-1 leading-relaxed text-neutral-800 min-w-0 text-center"
                 style={{ fontSize: "clamp(0.75rem, 2vw, 1rem)" }}>
-                <span className="block truncate">{taxi.departure}</span>
-                {"-> "}
+                <span className="block truncate">
+                  {taxi.departure}
+                  {"-> "}
+                </span>
                 <span className="block truncate">{taxi.destination}</span>
               </p>
               <div>
