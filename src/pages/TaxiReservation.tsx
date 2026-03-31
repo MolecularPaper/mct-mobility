@@ -92,11 +92,11 @@ export default function TaxiReservation() {
         </Link>
       </div>
 
-      <div className="flex items-center border-b border-gray-300 pb-2 text-lg font-bold text-neutral-700">
-        <span className="ml-5 w-16">승객</span>
-        <span className="w-20 text-center">출발 시간</span>
-        <span className="flex-1 shrink-0 text-center">출발-&gt;도착</span>
-        <span className="mr-5 w-24 text-center">관리</span>
+      <div className="ml-8.5 mr-8.5 flex items-center border-b border-gray-300 pb-2 text-lg font-bold text-neutral-700">
+        <span className="flex-1">승객</span>
+        <span className="flex-1 text-center">출발 시간</span>
+        <span className="flex-2 shrink-0 text-center">출발-&gt;도착</span>
+        <span className="flex-1 text-center">관리</span>
       </div>
 
       <div className="flex flex-1 flex-col gap-3 overflow-y-auto p-4">
@@ -105,28 +105,33 @@ export default function TaxiReservation() {
             <div
               key={taxi._id?.toString()}
               className="flex items-center gap-3 rounded-lg border border-gray-300 bg-white p-4">
-              <span className="w-16 truncate text-xs font-semibold text-neutral-700">
-                {taxi.passenger_id}
-              </span>
-              <span className="w-20 text-xs font-bold text-neutral-900">
+              <div className="flex flex-1 flex-col">
+                <span className="truncate text-xs font-semibold text-neutral-700">
+                  {taxi.passenger_id}
+                </span>
+                <p className="m-0 mt-1 text-[0.8rem] text-neutral-800 text-left">
+                  승객수: {taxi.passengerCount}명
+                </p>
+              </div>
+              <span className="flex-1 text-xs font-bold text-neutral-900 text-center">
                 {new Date(taxi.departureTime)
                   .toISOString()
                   .slice(0, 16)
                   .replace("T", " ")}
               </span>
               <p
-                className="m-0 flex-1 leading-relaxed text-neutral-800 min-w-0 text-center"
+                className="m-0 flex-2 leading-relaxed text-neutral-800 min-w-0 text-center"
                 style={{ fontSize: "clamp(0.7rem, 2vw, 0.875rem)" }}>
                 <span className="block truncate">{taxi.departure}</span>
                 {"-> "}
                 <span className="block truncate">{taxi.destination}</span>
               </p>
-              <div className="flex w-24 flex-col items-center gap-1">
+              <div className="flex flex-1 flex-col items-center gap-1">
                 <p className={`text-sm font-bold ${STATUS_COLOR[taxi.status]}`}>
                   {STATUS_LABEL[taxi.status]}
                 </p>
                 {taxi.status === "pending" && (
-                  <div className="flex gap-1">
+                  <div className="flex flex-1 gap-1">
                     <Button
                       onClick={() =>
                         updateStatus(taxi._id!.toString(), "approved")
