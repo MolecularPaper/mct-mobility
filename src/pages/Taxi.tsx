@@ -175,12 +175,17 @@ export default function Taxi() {
             <div
               key={taxi._id?.toString()}
               className="flex items-center gap-4 rounded-lg border border-gray-300 bg-white p-4">
-              <span className="w-20 text-xs font-bold text-neutral-900">
-                {new Date(taxi.departureTime)
-                  .toISOString()
-                  .slice(0, 16)
-                  .replace("T", " ")}
-              </span>
+              <div className="flex flex-col">
+                <span className="w-20 text-xs font-bold text-neutral-900">
+                  {new Date(taxi.departureTime)
+                    .toISOString()
+                    .slice(0, 16)
+                    .replace("T", " ")}
+                </span>
+                <p className="m-0 mt-1 text-[0.8rem] text-neutral-800 text-left">
+                  승객수: {taxi.passengerCount}명
+                </p>
+              </div>
               <p
                 className="m-0 flex-1 leading-relaxed text-neutral-800 min-w-0 text-center"
                 style={{ fontSize: "clamp(0.75rem, 2vw, 1rem)" }}>
