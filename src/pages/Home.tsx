@@ -19,13 +19,20 @@ export default function Home() {
   return (
     <>
       <div className="flex flex-col h-screen overflow-hidden">
-        <div className="w-full mt-8 flex justify-center items-center">
-          <span className="flex-1 text-4xl font-bold text-center h-min min-h-min">
-            상승 모빌리티
-          </span>
-          <div className="mr-6 flex flex-col">
+        <div className="w-full p-4 flex justify-center items-center bg-blue-300">
+          <div className="flex-1">
+            <span className="text-4xl font-bold text-left h-min min-h-min">
+              상승 GO!
+            </span>
+            <p className="text-[12px]">
+              {"빠르고, 함께하고, 비용도 아끼는 스마트한 상승 인(人)"}
+            </p>
+          </div>
+          <div className="flex flex-col">
             <p>유저: {userId}</p>
-            <Button className="text-[12px] mt-1 p-0.5" onClick={logout}>
+            <Button
+              className="w-min-fit mt-1 p-0.5 text-[0.75rem]"
+              onClick={logout}>
               로그아웃
             </Button>
           </div>
