@@ -137,7 +137,7 @@ export default function Taxi() {
             />
             <input
               type="text"
-              placeholder="몇명에서 가나요?"
+              placeholder="몇명이서 탑승하나요?"
               value={passengerCount || ""}
               onChange={(e) =>
                 setPassengerCount(

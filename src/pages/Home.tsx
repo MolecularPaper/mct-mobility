@@ -57,7 +57,7 @@ export default function Home() {
           </div>
           <div className="w-1 h-full ml-4 mr-4 bg-gray-700/40" />
           <div className="flex flex-1 flex-col gap-4 justify-start">
-            <p className="text-center text-xl">택시</p>
+            <p className="text-center text-xl">상승 CALL</p>
             <Link
               to="/taxi"
               className="flex w-full justify-center cursor-pointer">
