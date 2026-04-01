@@ -3252,6 +3252,11 @@ vite-plugin-react-click-to-component@^4.2.1:
   resolved "https://registry.yarnpkg.com/vite-plugin-react-click-to-component/-/vite-plugin-react-click-to-component-4.2.1.tgz#f4be52e4df551377470769b7f3205e9143beaa3c"
   integrity sha512-41zpxjc1PrYrKHKYU9csvfmVIq3QGEbwC9slFMbFqAhuhPLiGINKH7In/xf3k7ZK2uC71o80nRIqbVZ5WrBvvQ==
 
+vite-plugin-remove-console@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/vite-plugin-remove-console/-/vite-plugin-remove-console-2.2.0.tgz#a73c6ba1b217b56accc5135c508b58c4df45431e"
+  integrity sha512-qgjh5pz75MdE9Kzs8J0kBwaCfifHV0ezRbB9rpGsIOxam+ilcGV7WOk91vFJXquzRmiKrFh3Hxlh0JJWAmXTbQ==
+
 vite@^7.3.1:
   version "7.3.1"
   resolved "https://registry.yarnpkg.com/vite/-/vite-7.3.1.tgz#7f6cfe8fb9074138605e822a75d9d30b814d6507"
