@@ -178,7 +178,7 @@ function PassengerList() {
       <div className="mx-auto flex h-screen flex-col gap-6 p-6 bg-gray-50">
         <div className="flex flex-row">
           <h1 className="text-2xl font-black text-neutral-900 flex-1">
-            이쪽으로 가요
+            여기로 가요
           </h1>
           <Link to="/" className="w-[32] h-[32] mr-6">
             <img className="w-full h-full" src={homeIcon} alt="홈 버튼" />

@@ -21,10 +21,10 @@ export default function Home() {
       <div className="flex flex-col h-screen overflow-y-auto">
         <div className="w-full p-4 flex justify-center items-center bg-blue-300">
           <div className="flex-1">
-            <span className="text-4xl font-bold text-left h-min min-h-min">
+            <span className="text-3xl font-bold text-left h-min min-h-min">
               상승 GO!
             </span>
-            <div className="text-[12px]">
+            <div className="text-1xl">
               <p>{"빠르고, 함께하고, 비용도 아끼는"}</p>
               <p>{"스마트한 상승 인(人)"}</p>
             </div>
@@ -57,7 +57,7 @@ export default function Home() {
           </div>
           <div className="w-1 h-full ml-4 mr-4 bg-gray-700/40" />
           <div className="flex flex-1 flex-col gap-4 justify-start">
-            <p className="text-center text-xl">택시</p>
+            <p className="text-center text-xl">상승 CALL</p>
             <Link
               to="/taxi"
               className="flex w-full justify-center cursor-pointer">
