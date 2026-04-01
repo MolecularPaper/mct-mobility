@@ -3,9 +3,17 @@ import react from "@vitejs/plugin-react-swc";
 import { reactClickToComponent } from "vite-plugin-react-click-to-component";
 import tailwindcss from "@tailwindcss/vite";
 import path from "path";
+import removeConsole from "vite-plugin-remove-console";
 
 export default defineConfig({
-  plugins: [react(), reactClickToComponent(), tailwindcss()],
+  plugins: [
+    react(),
+    reactClickToComponent(),
+    tailwindcss(),
+    removeConsole({
+      includes: ["log", "warn", "error"],
+    }),
+  ],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),

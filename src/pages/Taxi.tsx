@@ -106,7 +106,9 @@ export default function Taxi() {
   return (
     <div className="mx-auto flex h-screen flex-col bg-gray-50">
       <div className="flex flex-row m-6">
-        <h1 className="text-2xl font-black text-neutral-900 flex-1">택시</h1>
+        <h1 className="text-2xl font-black text-neutral-900 flex-1">
+          상승 CALL
+        </h1>
         <Link to="/" className="w-[32] h-[32] mr-6">
           <img className="w-full h-full" src={homeIcon} alt="홈 버튼" />
         </Link>
