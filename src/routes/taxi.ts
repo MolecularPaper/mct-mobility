@@ -105,7 +105,7 @@ taxiRouter.post("/api/taxi", authGuard, async (req, res) => {
 
     res.json({ success: true, insertedId: result.insertedId });
   } catch (err) {
-    res.status(500).json({ error: "Failed to create taxi" });
+    res.status(500).json({ error: `Failed to create taxi: ${err}` });
   }
 });
 
