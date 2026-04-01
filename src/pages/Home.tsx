@@ -37,11 +37,8 @@ export default function Home() {
             </Button>
           </div>
         </div>
-        <div className="w-full max-w-full mt-8 max-h-75 flex justify-center">
-          <img
-            src={baner}
-            className="w-auto h-full aspect-8/6 object-cover rounded-lg"
-          />
+        <div className="max-h-75 m-4 p-4 justify-center border-2 border-gray-800">
+          <img src={baner} className="w-full h-full object-contain" />
         </div>
         <div className="flex flex-1 m-4 mt-0 justify-center">
           <div className="flex flex-1 flex-col gap-4 justify-start">
