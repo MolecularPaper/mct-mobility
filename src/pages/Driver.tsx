@@ -131,7 +131,7 @@ export default function DriverList() {
             className="field-sizing-content flex-1 min-w-auto rounded-lg bg-gray-100 px-3 py-2 text-center text-sm outline-none focus:ring-2 focus:ring-blue-400"
           />
           <Input
-            label="최대 승객"
+            label="탑승 가능 인원"
             labelProps={{
               className: "ml-1 mr-2 text-[0.8rem]",
             }}
