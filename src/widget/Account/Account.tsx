@@ -13,15 +13,18 @@ export default function Account() {
   const [activeLoginPage, setActiveLoginPage] = useState(true);
 
   return (
-    <div className="w-screen h-screen pb-60 flex flex-col justify-center items-center bg-gray-50">
-      <div className="m-8 mb-28 max-h-32">
-        <img src={baner} className="w-auto h-full object-contain" />
+    <div className="relative w-screen h-screen flex flex-col justify-center items-center bg-gray-50">
+      <div
+        className="absolute inset-0 opacity-50 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${baner})` }}
+      />
+      <div className="relative z-10 flex flex-col items-center">
+        {activeLoginPage ? (
+          <Login setActiveLoginPage={setActiveLoginPage} />
+        ) : (
+          <Register setActiveLoginPage={setActiveLoginPage} />
+        )}
       </div>
-      {activeLoginPage ? (
-        <Login setActiveLoginPage={setActiveLoginPage} />
-      ) : (
-        <Register setActiveLoginPage={setActiveLoginPage} />
-      )}
     </div>
   );
 }
