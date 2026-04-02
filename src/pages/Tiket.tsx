@@ -11,7 +11,7 @@ import { twMerge } from "tailwind-merge";
  */
 interface TiketProps {
   carpool: Carpool;
-  showDriverId?: boolean;
+  showDriverInfo?: boolean;
   buttonText: string;
   buttonClassName?: string;
   onClick?: () => void;
@@ -29,7 +29,7 @@ export default function TiketCard({
   carpool,
   buttonText,
   buttonClassName,
-  showDriverId,
+  showDriverInfo,
   onClick,
   onCardClick,
 }: TiketProps) {
@@ -38,10 +38,10 @@ export default function TiketCard({
       className="flex items-center justify-between gap-4 rounded-lg border border-gray-300 bg-white p-4 pr-3 cursor-pointer hover:bg-gray-50"
       onClick={onCardClick}>
       <div className="flex w-fit shrink-0 flex-col items-center gap-1 min-w-0 flex-1 overflow-hidden">
-        {showDriverId && (
+        {showDriverInfo && (
           <p className="truncate w-full text-sm">운전자: {carpool.driver_id}</p>
         )}
-        {carpool.driver_phone && (
+        {showDriverInfo && (
           <p className="truncate w-full text-sm text-neutral-600">
             연락처: {carpool.driver_phone}
           </p>

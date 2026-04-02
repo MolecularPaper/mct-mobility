@@ -106,7 +106,7 @@ function PassengerList() {
       return (
         <TiketCard
           carpool={carpool}
-          showDriverId={true}
+          showDriverInfo={true}
           buttonText="등록해제"
           onCardClick={() => setSelectedCarpool(carpool)}
           onClick={() => {
@@ -119,7 +119,7 @@ function PassengerList() {
       return (
         <TiketCard
           carpool={carpool}
-          showDriverId={true}
+          showDriverInfo={true}
           buttonText="같이가요"
           onCardClick={() => setSelectedCarpool(carpool)}
           onClick={() => {
