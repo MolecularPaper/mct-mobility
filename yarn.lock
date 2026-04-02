@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@agendajs/mongo-backend@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@agendajs/mongo-backend/-/mongo-backend-4.0.0.tgz#ddc639fafb09a980abf972c5fea78956f77fc00f"
+  integrity sha512-ZzsueklCngZIhyyIWkGU0wELc1o7aWosUyTHlqPiGv0qcjKg2olsfg1S1TVR5xI42UlwMksLle7QDjsYl8hbYg==
+  dependencies:
+    debug "^4.4.0"
+
 "@alloc/quick-lru@^5.2.0":
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/@alloc/quick-lru/-/quick-lru-5.2.0.tgz#7bf68b20c0a350f936915fcae06f58e32007ce30"
