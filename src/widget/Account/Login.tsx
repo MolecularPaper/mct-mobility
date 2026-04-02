@@ -44,7 +44,7 @@ export default function Login({ setActiveLoginPage }: AccountChildProps) {
   }
 
   return (
-    <div className="w-96 h-fit min-h-75 bg-white flex flex-col p-8 rounded-xl shadow-md">
+    <div className="w-80 h-fit min-h-60 bg-white flex flex-col p-6 rounded-xl shadow-md">
       <p className="self-center text-2xl">로그인</p>
       <Input
         className="mt-8 text-[15px]"
