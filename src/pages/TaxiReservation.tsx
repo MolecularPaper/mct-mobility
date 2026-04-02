@@ -65,7 +65,7 @@ export default function TaxiReservation() {
     });
 
     if (!res.ok) {
-      alert("처리에 실패했습니다.");
+      console.error("처리에 실패했습니다.");
       return;
     }
 
