@@ -1,4 +1,5 @@
 import Button from "@/components/Button";
+import { FormatPhoneNumber } from "@/utils/format";
 import { Carpool } from "@/db/table";
 import { twMerge } from "tailwind-merge";
 
@@ -43,7 +44,7 @@ export default function CarpoolTiket({
         )}
         {showDriverInfo && (
           <p className="truncate w-full text-sm text-neutral-600">
-            연락처: {carpool.driver_phone}
+            연락처: {FormatPhoneNumber(carpool.driver_phone)}
           </p>
         )}
         <p

@@ -5,7 +5,9 @@ import { ObjectId } from "mongodb";
 import { Button, Input } from "@/components";
 import Modal from "@/components/Modal";
 import { useAuthInfo } from "@/hooks";
+
 import { getKSTIsoString } from "@/utils/date";
+import { FormatNumber, FormatPhoneNumber } from "@/utils/format";
 
 import CarpoolTiket from "./CarpoolTiket";
 import CarpoolInfo from "./CarpoolInfo";
@@ -160,9 +162,9 @@ export default function DriverList() {
             }}
             inputProps={{
               type: "tel",
-              value: driverPhone,
+              value: FormatPhoneNumber(driverPhone),
               placeholder: "010-0000-0000",
-              onChange: (e) => setDriverPhone(e.target.value),
+              onChange: (e) => setDriverPhone(FormatNumber(e.target.value)),
               className:
                 "flex-1 rounded-lg bg-gray-100 border-none px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-400",
             }}
