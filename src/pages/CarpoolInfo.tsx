@@ -26,7 +26,7 @@ export default function CarpoolInfo({
         <h2 className="text-lg font-bold text-neutral-900">카풀 정보</h2>
         <div className="flex flex-col gap-1 text-sm text-neutral-700">
           <p>운전자: {driverId}</p>
-          <p>운전자: {driverPhone}</p>
+          <p>운전자 연락처: {driverPhone}</p>
           <p>
             경로: {departure} → {destination}
           </p>
