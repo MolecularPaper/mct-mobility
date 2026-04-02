@@ -43,7 +43,7 @@ export default function Home() {
         <div className="max-h-[30vh] m-4 p-4 justify-center border-2 border-gray-800">
           <img src={baner} className="w-full h-full object-contain" />
         </div>
-        <div className="flex flex-1 m-4 mt-0 justify-center">
+        <div className="flex flex-1 m-4 justify-center">
           <div className="flex flex-1 flex-col gap-4 justify-start">
             <p className="text-center text-xl underline">카풀 CARPOOL</p>
             <Link
@@ -58,7 +58,7 @@ export default function Home() {
             </Link>
           </div>
           <div className="w-1 h-full ml-4 mr-4 bg-gray-700/40" />
-          <div className="flex flex-1 flex-col gap-4 justify-start">
+          <div className="flex flex-1 flex-col gap-4 justify-center items-center">
             <p className="text-center text-xl underline">상승 TAXI</p>
             <Link
               to="/taxi"
