@@ -5,6 +5,7 @@ import { Transform } from "node:stream";
 import cookieParser from "cookie-parser";
 
 import { startScheduler } from "./src/server/services/scheduler.ts";
+import { logCaptureMiddleware } from "./src/server/middleware/logCapture.ts";
 import authRouter from "./src/server/api/auth.ts";
 import taxiRouter from "./src/server/api/taxi.ts";
 import carpoolRouter from "./src/server/api/carpool.ts";
@@ -45,6 +46,7 @@ if (!isProduction) {
 }
 
 app.use(express.json());
+app.use(logCaptureMiddleware);
 app.use(cookieParser());
 app.use(authRouter);
 app.use(userRouter);
