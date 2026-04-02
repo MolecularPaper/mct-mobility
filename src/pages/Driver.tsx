@@ -41,7 +41,8 @@ export default function DriverList() {
     });
 
     if (!res.ok) {
-      console.error("등록할 수 없습니다, 입력값을 확인해주세요!");
+      console.error((await res.json()).error);
+      alert("등록할 수 없습니다, 입력값을 확인해주세요!");
       return;
     }
 

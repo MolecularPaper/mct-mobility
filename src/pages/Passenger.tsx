@@ -88,13 +88,13 @@ function PassengerList() {
         await getCarpoolList();
         break;
       case 409:
-        console.error("이미 등록된 승객입니다");
+        alert("이미 등록된 승객입니다");
         break;
       case 404:
-        console.error("카풀을 찾을 수 없습니다");
+        alert("카풀을 찾을 수 없습니다");
         break;
       default:
-        console.error("승객 등록에 실패했습니다");
+        alert("승객 등록에 실패했습니다");
         break;
     }
   }
