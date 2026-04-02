@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ObjectId } from "mongodb";
 
-import { useAuthInfo } from "@/hooks";
+import { useAuthInfo } from "@/client/hooks";
 import { getKSTIsoString } from "@/utils/date";
-import Button from "@/components/Button";
-import type { Taxi } from "@/db/table";
+import Button from "@/client/components/Button";
+import type { Taxi } from "@/server/db/table";
 
 import homeIcon from "@/assets/home.svg";
 

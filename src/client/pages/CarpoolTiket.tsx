@@ -1,6 +1,6 @@
-import Button from "@/components/Button";
+import Button from "@/client/components/Button";
 import { FormatPhoneNumber } from "@/utils/format";
-import { Carpool } from "@/db/table";
+import { Carpool } from "@/server/db/table";
 import { twMerge } from "tailwind-merge";
 
 /**

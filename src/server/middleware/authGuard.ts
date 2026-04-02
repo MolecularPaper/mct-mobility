@@ -1,6 +1,6 @@
 // server/middleware/authGuard.ts
 import { Request, Response, NextFunction } from "express";
-import { verifyAccessToken } from "../utils/jwt";
+import { verifyAccessToken } from "../../utils/jwt";
 
 // Request에 user 타입 추가
 declare global {

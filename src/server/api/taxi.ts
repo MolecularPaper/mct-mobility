@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { ObjectId } from "mongodb";
-import { authGuard } from "@/middleware/authGuard";
-import { connectToDatabase } from "@/db/db";
-import { Taxi, TaxiReservation } from "@/db/table";
+import { authGuard } from "@/server/middleware/authGuard";
+import { connectToDatabase } from "@/server/db/db";
+import { Taxi, TaxiReservation } from "@/server/db/table";
 import { getKST } from "@/utils/date";
 
 const taxiRouter = Router();

@@ -1,14 +1,14 @@
 // server/routes/auth.ts
 import { Router } from "express";
 import bcrypt from "bcrypt";
-import { connectToDatabase } from "@/db/db";
+import { connectToDatabase } from "@/server/db/db";
 import {
   signAccessToken,
   signRefreshToken,
   verifyRefreshToken,
-} from "../utils/jwt";
-import { setTokenCookies, clearTokenCookies } from "../utils/cookie";
-import { authGuard } from "@/middleware/authGuard";
+} from "../../utils/jwt";
+import { setTokenCookies, clearTokenCookies } from "../../utils/cookie";
+import { authGuard } from "@/server/middleware/authGuard";
 
 const authRouter = Router();
 const SALT_ROUNDS = 12;

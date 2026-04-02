@@ -1,4 +1,4 @@
-import Button from "@/components/Button";
+import Button from "@/client/components/Button";
 import { FormatPhoneNumber } from "@/utils/format";
 
 interface CarpoolInfoProps {

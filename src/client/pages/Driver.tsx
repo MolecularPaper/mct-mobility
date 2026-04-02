@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ObjectId } from "mongodb";
 
-import { Button, Input } from "@/components";
-import Modal from "@/components/Modal";
-import { useAuthInfo } from "@/hooks";
+import { Button, Input } from "@/client/components";
+import Modal from "@/client/components/Modal";
+import { useAuthInfo } from "@/client/hooks";
 
 import { getKSTIsoString } from "@/utils/date";
 import { FormatNumber, FormatPhoneNumber } from "@/utils/format";
@@ -12,7 +12,7 @@ import { FormatNumber, FormatPhoneNumber } from "@/utils/format";
 import CarpoolTiket from "./CarpoolTiket";
 import CarpoolInfo from "./CarpoolInfo";
 import homeIcon from "@/assets/home.svg";
-import { Carpool } from "@/db/table";
+import { Carpool } from "@/server/db/table";
 
 export default function DriverList() {
   const { isLoggedIn, userId } = useAuthInfo();

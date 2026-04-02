@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-import Input from "@/components/Input";
-import Button from "@/components/Button";
+import Input from "@/client/components/Input";
+import Button from "@/client/components/Button";
 
 import { AccountChildProps } from "./Account";
 

@@ -3,7 +3,7 @@ import { StrictMode } from "react";
 import { hydrateRoot } from "react-dom/client";
 
 import { BrowserRouter } from "react-router-dom";
-import Router from "./pages/Router";
+import Router from "./client/pages/Router";
 
 hydrateRoot(
   document.getElementById("root") as HTMLElement,

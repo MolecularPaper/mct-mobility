@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 
-import { useAuthInfo } from "@/hooks";
+import { useAuthInfo } from "@/client/hooks";
 import { logout } from "@/utils/auth";
-import Button from "@/components/Button";
+import Button from "@/client/components/Button";
 
 import baner from "@/assets/baner.gif";
 import driver from "@/assets/driver.webp";

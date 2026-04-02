@@ -3,12 +3,12 @@ import { JSX, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ObjectId } from "mongodb";
 
-import { useAuthInfo } from "@/hooks";
-import { Carpool } from "@/db/table";
+import { useAuthInfo } from "@/client/hooks";
+import { Carpool } from "@/server/db/table";
 import { getKSTIsoString } from "@/utils/date";
 import { FormatNumber, FormatPhoneNumber } from "@/utils/format";
-import Button from "@/components/Button";
-import Modal from "@/components/Modal";
+import Button from "@/client/components/Button";
+import Modal from "@/client/components/Modal";
 import CarpoolTiket from "./CarpoolTiket";
 import CarpoolInfo from "./CarpoolInfo";
 
