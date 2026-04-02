@@ -78,7 +78,13 @@ export default function Taxi() {
 
     if (!res.ok) {
       console.error((await res.json()).error);
-      alert("등록할 수 없습니다, 입력값을 확인해주세요!");
+
+      if (res.status === 409) {
+        alert("택시가 이미 운행중입니다, 출발시간을 조절하여 주세요!");
+      } else {
+        alert("등록할 수 없습니다, 입력값을 확인해주세요!");
+      }
+
       return;
     }
 
