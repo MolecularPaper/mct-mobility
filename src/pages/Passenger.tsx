@@ -9,7 +9,7 @@ import { getKSTIsoString } from "@/utils/date";
 import Button from "@/components/Button";
 import Modal from "@/components/Modal";
 import TiketCard from "./Tiket";
-import PassengerListModal from "./PassengerListModal";
+import CarpoolInfo from "./CarpoolInfo";
 
 import homeIcon from "@/assets/home.svg";
 
@@ -138,7 +138,7 @@ function PassengerList() {
   return (
     <>
       <Modal active={selectedCarpool !== null}>
-        <PassengerListModal
+        <CarpoolInfo
           driverId={selectedCarpool?.driver_id ?? ""}
           driverPhone={selectedCarpool?.driver_phone ?? ""}
           departure={selectedCarpool?.departure ?? ""}

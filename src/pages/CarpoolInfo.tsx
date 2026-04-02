@@ -1,6 +1,6 @@
 import Button from "@/components/Button";
 
-interface PassengerListModalProps {
+interface CarpoolInfoProps {
   driverId: string;
   driverPhone: string;
   departure: string;
@@ -11,7 +11,7 @@ interface PassengerListModalProps {
 }
 
 /** 카풀 승객 목록을 표시하는 모달 내부 컴포넌트 */
-export default function PassengerListModal({
+export default function CarpoolInfo({
   driverId,
   driverPhone,
   departure,
@@ -19,7 +19,7 @@ export default function PassengerListModal({
   passengers,
   maxPassenger,
   onClose,
-}: PassengerListModalProps) {
+}: CarpoolInfoProps) {
   return (
     <div className="flex h-full items-center justify-center p-6">
       <div className="w-full max-w-sm rounded-xl bg-white p-6 flex flex-col gap-4 shadow-lg">

@@ -8,7 +8,7 @@ import { useAuthInfo } from "@/hooks";
 import { getKSTIsoString } from "@/utils/date";
 
 import TiketCard from "./Tiket";
-import PassengerListModal from "./PassengerListModal";
+import CarpoolInfo from "./CarpoolInfo";
 import homeIcon from "@/assets/home.svg";
 import { Carpool } from "@/db/table";
 
@@ -91,7 +91,7 @@ export default function DriverList() {
   return (
     <>
       <Modal active={selectedCarpool !== null}>
-        <PassengerListModal
+        <CarpoolInfo
           driverId={selectedCarpool?.driver_id ?? ""}
           driverPhone={selectedCarpool?.driver_phone ?? ""}
           departure={selectedCarpool?.departure ?? ""}
