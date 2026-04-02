@@ -45,7 +45,7 @@ export default function Home() {
         </div>
         <div className="flex flex-1 m-4 mt-0 justify-center">
           <div className="flex flex-1 flex-col gap-4 justify-start">
-            <p className="text-center text-xl">카풀</p>
+            <p className="text-center text-xl underline">카풀 CARPOOL</p>
             <Link
               to="/driver"
               className="flex w-full justify-center cursor-pointer">
@@ -59,7 +59,7 @@ export default function Home() {
           </div>
           <div className="w-1 h-full ml-4 mr-4 bg-gray-700/40" />
           <div className="flex flex-1 flex-col gap-4 justify-start">
-            <p className="text-center text-xl">상승 TAXI</p>
+            <p className="text-center text-xl underline">상승 TAXI</p>
             <Link
               to="/taxi"
               className="flex w-full justify-center cursor-pointer">
