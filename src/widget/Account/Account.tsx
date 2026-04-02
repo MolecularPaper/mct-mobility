@@ -15,7 +15,7 @@ export default function Account() {
   return (
     <div className="relative w-screen h-screen flex flex-col justify-center items-center bg-gray-50">
       <div
-        className="absolute inset-0 opacity-50 bg-cover bg-center bg-no-repeat"
+        className="absolute inset-0 opacity-50 bg-contain bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${baner})` }}
       />
       <div className="relative z-10 flex flex-col items-center">
