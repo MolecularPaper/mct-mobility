@@ -25,7 +25,7 @@ const MIN_FONT_SIZE_REM = 0.7;
  * 카풀 탑승 카드 컴포넌트
  * 출발지, 도착지, 출발 시간을 표시하고 탑승 신청 버튼을 제공한다.
  */
-export default function TiketCard({
+export default function CarpoolTiket({
   carpool,
   buttonText,
   buttonClassName,

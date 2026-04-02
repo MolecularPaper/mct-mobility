@@ -7,7 +7,7 @@ import Modal from "@/components/Modal";
 import { useAuthInfo } from "@/hooks";
 import { getKSTIsoString } from "@/utils/date";
 
-import TiketCard from "./Tiket";
+import CarpoolTiket from "./CarpoolTiket";
 import CarpoolInfo from "./CarpoolInfo";
 import homeIcon from "@/assets/home.svg";
 import { Carpool } from "@/db/table";
@@ -180,7 +180,7 @@ export default function DriverList() {
 
         <div className="flex flex-1 flex-col gap-3 overflow-y-auto">
           {carpoolList.map((carpool) => (
-            <TiketCard
+            <CarpoolTiket
               carpool={carpool}
               buttonText="삭제"
               buttonClassName="bg-red-500"

@@ -8,7 +8,7 @@ import { Carpool } from "@/db/table";
 import { getKSTIsoString } from "@/utils/date";
 import Button from "@/components/Button";
 import Modal from "@/components/Modal";
-import TiketCard from "./Tiket";
+import CarpoolTiket from "./CarpoolTiket";
 import CarpoolInfo from "./CarpoolInfo";
 
 import homeIcon from "@/assets/home.svg";
@@ -104,7 +104,7 @@ function PassengerList() {
 
     if (carpool.passengers.some((p) => p.id === (userId ?? ""))) {
       return (
-        <TiketCard
+        <CarpoolTiket
           carpool={carpool}
           showDriverInfo={true}
           buttonText="등록해제"
@@ -117,7 +117,7 @@ function PassengerList() {
       );
     } else {
       return (
-        <TiketCard
+        <CarpoolTiket
           carpool={carpool}
           showDriverInfo={true}
           buttonText="같이가요"
