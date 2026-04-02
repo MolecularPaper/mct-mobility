@@ -6,7 +6,7 @@ import {
   renderToPipeableStream,
 } from "react-dom/server";
 
-import Router from "./pages/Router";
+import Router from "./client/pages/Router";
 
 export function render(_url: string, options?: RenderToPipeableStreamOptions) {
   return renderToPipeableStream(

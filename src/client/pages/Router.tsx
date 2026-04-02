@@ -1,9 +1,9 @@
 // src/App.tsx
 import { Routes, Route } from "react-router-dom";
-import { useAuthRefresh, useAuthInfo } from "@/hooks";
+import { useAuthRefresh, useAuthInfo } from "@/client/hooks";
 
-import { Modal } from "@/components";
-import { Account } from "@/widget";
+import { Modal } from "@/client/components";
+import { Account } from "@/client/widget";
 
 import NotFound from "./NotFound";
 import Home from "./Home";

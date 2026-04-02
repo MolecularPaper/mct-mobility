@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 
-import { useAuthInfo } from "@/hooks";
-import Button from "@/components/Button";
-import type { Taxi } from "@/db/table";
+import { useAuthInfo } from "@/client/hooks";
+import Button from "@/client/components/Button";
+import type { Taxi } from "@/server/db/table";
 
 import homeIcon from "@/assets/home.svg";
 
@@ -65,7 +65,7 @@ export default function TaxiReservation() {
     });
 
     if (!res.ok) {
-      alert("처리에 실패했습니다.");
+      console.error("처리에 실패했습니다.");
       return;
     }
 

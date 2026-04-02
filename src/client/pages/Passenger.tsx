@@ -3,13 +3,14 @@ import { JSX, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ObjectId } from "mongodb";
 
-import { useAuthInfo } from "@/hooks";
-import { Carpool } from "@/db/table";
+import { useAuthInfo } from "@/client/hooks";
+import { Carpool } from "@/server/db/table";
 import { getKSTIsoString } from "@/utils/date";
-import Button from "@/components/Button";
-import Modal from "@/components/Modal";
-import TiketCard from "./Tiket";
-import PassengerListModal from "./PassengerListModal";
+import { FormatNumber, FormatPhoneNumber } from "@/utils/format";
+import Button from "@/client/components/Button";
+import Modal from "@/client/components/Modal";
+import CarpoolTiket from "./CarpoolTiket";
+import CarpoolInfo from "./CarpoolInfo";
 
 import homeIcon from "@/assets/home.svg";
 
@@ -104,9 +105,9 @@ function PassengerList() {
 
     if (carpool.passengers.some((p) => p.id === (userId ?? ""))) {
       return (
-        <TiketCard
+        <CarpoolTiket
           carpool={carpool}
-          showDriverId={true}
+          showDriverInfo={true}
           buttonText="등록해제"
           onCardClick={() => setSelectedCarpool(carpool)}
           onClick={() => {
@@ -117,9 +118,9 @@ function PassengerList() {
       );
     } else {
       return (
-        <TiketCard
+        <CarpoolTiket
           carpool={carpool}
-          showDriverId={true}
+          showDriverInfo={true}
           buttonText="같이가요"
           onCardClick={() => setSelectedCarpool(carpool)}
           onClick={() => {
@@ -138,8 +139,9 @@ function PassengerList() {
   return (
     <>
       <Modal active={selectedCarpool !== null}>
-        <PassengerListModal
+        <CarpoolInfo
           driverId={selectedCarpool?.driver_id ?? ""}
+          driverPhone={selectedCarpool?.driver_phone ?? ""}
           departure={selectedCarpool?.departure ?? ""}
           destination={selectedCarpool?.destination ?? ""}
           passengers={selectedCarpool?.passengers ?? []}
@@ -153,8 +155,8 @@ function PassengerList() {
             <input
               type="text"
               placeholder="연락받을 전화번호를 입력해주세요"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
+              value={FormatPhoneNumber(phoneNumber)}
+              onChange={(e) => setPhoneNumber(FormatNumber(e.target.value))}
               className="w-full rounded-lg bg-gray-100 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-400"
             />
             <div className="flex w-full mt-4 gap-2">

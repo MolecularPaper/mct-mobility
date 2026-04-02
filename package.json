@@ -17,6 +17,7 @@
   "dependencies": {
     "@tailwindcss/postcss": "^4.2.2",
     "@tailwindcss/vite": "^4.2.2",
+    "agenda": "^6.2.3",
     "bcrypt": "^6.0.0",
     "compression": "^1.8.1",
     "cookie-parser": "^1.4.7",
@@ -25,6 +26,7 @@
     "jsonwebtoken": "^9.0.3",
     "lottie-react": "^2.4.1",
     "mongodb": "^7.1.1",
+    "nodemailer": "^8.0.4",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-router-dom": "^7.13.1",

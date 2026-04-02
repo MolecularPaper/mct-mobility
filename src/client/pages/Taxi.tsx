@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ObjectId } from "mongodb";
 
-import { useAuthInfo } from "@/hooks";
+import { useAuthInfo } from "@/client/hooks";
 import { getKSTIsoString } from "@/utils/date";
-import Button from "@/components/Button";
-import type { Taxi } from "@/db/table";
+import Button from "@/client/components/Button";
+import type { Taxi } from "@/server/db/table";
 
 import homeIcon from "@/assets/home.svg";
 
@@ -58,6 +58,11 @@ export default function Taxi() {
   async function postTaxi() {
     if (!isLoggedIn) return;
 
+    if (!departure || !destination || !departureTime || passengerCount < 1) {
+      alert("등록할 수 없습니다, 입력값을 확인해주세요!");
+      return;
+    }
+
     const res = await fetch("/api/taxi", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -72,8 +77,14 @@ export default function Taxi() {
     });
 
     if (!res.ok) {
-      alert("등록할 수 없습니다, 입력값을 확인해주세요!");
       console.error((await res.json()).error);
+
+      if (res.status === 409) {
+        alert("택시가 이미 운행중입니다, 출발시간을 조절하여 주세요!");
+      } else {
+        alert("등록할 수 없습니다, 입력값을 확인해주세요!");
+      }
+
       return;
     }
 
@@ -103,11 +114,18 @@ export default function Taxi() {
     getTaxiList();
   }, [isLoggedIn]);
 
+  useEffect(() => {
+    if (!isLoggedIn) return;
+    const POLLING_INTERVAL_MS = 10_000;
+    const id = setInterval(getTaxiList, POLLING_INTERVAL_MS);
+    return () => clearInterval(id);
+  }, [isLoggedIn]);
+
   return (
     <div className="mx-auto flex h-screen flex-col bg-gray-50">
       <div className="flex flex-row m-6">
         <h1 className="text-2xl font-black text-neutral-900 flex-1">
-          상승 CALL
+          상승 TAXI
         </h1>
         <Link to="/" className="w-[32] h-[32] mr-6">
           <img className="w-full h-full" src={homeIcon} alt="홈 버튼" />
@@ -143,7 +161,7 @@ export default function Taxi() {
               value={passengerCount || ""}
               onChange={(e) =>
                 setPassengerCount(
-                  parseInt(e.target.value.replace(/[^0-9]/g, "")),
+                  parseInt(e.target.value.replace(/[^0-9]/g, "")) || 0,
                 )
               }
               className="w-full rounded-lg bg-gray-100 px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-blue-400"
@@ -213,6 +231,13 @@ export default function Taxi() {
         ) : (
           <p className="text-center text-gray-400">예약 내역이 없습니다</p>
         )}
+      </div>
+      <div className="px-4 pb-4 text-center text-xs text-gray-500">
+        <p>
+          상승 TAXI는 해당일 근무시간 내 영내 및 상승대 독신숙소에서만
+          운행됩니다.
+        </p>
+        <p>상승 TAXI는 15분 간격으로 운행됩니다.</p>
       </div>
     </div>
   );

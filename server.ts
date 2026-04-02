@@ -4,10 +4,10 @@ import express from "express";
 import { Transform } from "node:stream";
 import cookieParser from "cookie-parser";
 
-import authRouter from "./src/routes/auth.ts";
-import taxiRouter from "./src/routes/taxi.ts";
-import carpoolRouter from "./src/routes/carpool.ts";
-import userRouter from "./src/routes/user.ts";
+import authRouter from "./src/server/api/auth.ts";
+import taxiRouter from "./src/server/api/taxi.ts";
+import carpoolRouter from "./src/server/api/carpool.ts";
+import userRouter from "./src/server/api/user.ts";
 
 // Constants
 const isProduction = process.env.NODE_ENV === "production";

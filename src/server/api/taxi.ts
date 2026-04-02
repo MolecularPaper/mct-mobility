@@ -1,14 +1,17 @@
 import { Router } from "express";
 import { ObjectId } from "mongodb";
-import { authGuard } from "@/middleware/authGuard";
-import { connectToDatabase } from "@/db/db";
-import { Taxi, TaxiReservation } from "@/db/table";
+import { authGuard } from "@/server/middleware/authGuard";
+import { connectToDatabase } from "@/server/db/db";
+import { Taxi, TaxiReservation } from "@/server/db/table";
 import { getKST } from "@/utils/date";
 
 const taxiRouter = Router();
 
 /** 같은 날짜 최대 예약 가능 횟수 */
 const MAX_DAILY_RESERVATIONS = 2;
+
+/** 택시 운행 간격 (밀리초) */
+const OPERATION_INTERVAL_MS = 15 * 60 * 1000;
 
 // 생성
 taxiRouter.post("/api/taxi", authGuard, async (req, res) => {
@@ -82,6 +85,41 @@ taxiRouter.post("/api/taxi", authGuard, async (req, res) => {
     if (dailyCount >= MAX_DAILY_RESERVATIONS) {
       return res.status(400).json({
         error: `Daily reservation limit reached (max: ${MAX_DAILY_RESERVATIONS})`,
+      });
+    }
+
+    const requestedTime = new Date(departureTime);
+    const intervalStart = new Date(
+      requestedTime.getTime() - OPERATION_INTERVAL_MS,
+    );
+    const activeInInterval = await db
+      .collection("Taxi")
+      .aggregate([
+        {
+          $match: {
+            departureTime: { $gte: intervalStart, $lt: requestedTime },
+          },
+        },
+        {
+          $lookup: {
+            from: "TaxiReservation",
+            localField: "_id",
+            foreignField: "taxi_id",
+            as: "reservation",
+          },
+        },
+        { $unwind: { path: "$reservation", preserveNullAndEmptyArrays: true } },
+        {
+          $match: {
+            "reservation.status": { $in: ["pending", "approved"] },
+          },
+        },
+      ])
+      .toArray();
+
+    if (activeInInterval.length > 0) {
+      return res.status(409).json({
+        error: "택시가 운행중입니다, 잠시만 기다려 주세요",
       });
     }
 

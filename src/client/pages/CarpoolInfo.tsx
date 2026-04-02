@@ -1,7 +1,9 @@
-import Button from "@/components/Button";
+import Button from "@/client/components/Button";
+import { FormatPhoneNumber } from "@/utils/format";
 
-interface PassengerListModalProps {
+interface CarpoolInfoProps {
   driverId: string;
+  driverPhone: string;
   departure: string;
   destination: string;
   passengers: { id: string; phone: string }[];
@@ -10,25 +12,27 @@ interface PassengerListModalProps {
 }
 
 /** 카풀 승객 목록을 표시하는 모달 내부 컴포넌트 */
-export default function PassengerListModal({
+export default function CarpoolInfo({
   driverId,
+  driverPhone,
   departure,
   destination,
   passengers,
   maxPassenger,
   onClose,
-}: PassengerListModalProps) {
+}: CarpoolInfoProps) {
   return (
     <div className="flex h-full items-center justify-center p-6">
       <div className="w-full max-w-sm rounded-xl bg-white p-6 flex flex-col gap-4 shadow-lg">
         <h2 className="text-lg font-bold text-neutral-900">카풀 정보</h2>
         <div className="flex flex-col gap-1 text-sm text-neutral-700">
           <p>운전자: {driverId}</p>
+          <p>운전자 연락처: {FormatPhoneNumber(driverPhone)}</p>
           <p>
             경로: {departure} → {destination}
           </p>
           <p>
-            승객 ({passengers.length}/{maxPassenger})
+            탑승인원 ({passengers.length}/{maxPassenger})
           </p>
         </div>
         <ul className="flex flex-col gap-2 max-h-48 overflow-y-auto">

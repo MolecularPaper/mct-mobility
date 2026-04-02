@@ -1,5 +1,6 @@
-import Button from "@/components/Button";
-import { Carpool } from "@/db/table";
+import Button from "@/client/components/Button";
+import { FormatPhoneNumber } from "@/utils/format";
+import { Carpool } from "@/server/db/table";
 import { twMerge } from "tailwind-merge";
 
 /**
@@ -11,7 +12,7 @@ import { twMerge } from "tailwind-merge";
  */
 interface TiketProps {
   carpool: Carpool;
-  showDriverId?: boolean;
+  showDriverInfo?: boolean;
   buttonText: string;
   buttonClassName?: string;
   onClick?: () => void;
@@ -25,11 +26,11 @@ const MIN_FONT_SIZE_REM = 0.7;
  * 카풀 탑승 카드 컴포넌트
  * 출발지, 도착지, 출발 시간을 표시하고 탑승 신청 버튼을 제공한다.
  */
-export default function TiketCard({
+export default function CarpoolTiket({
   carpool,
   buttonText,
   buttonClassName,
-  showDriverId,
+  showDriverInfo,
   onClick,
   onCardClick,
 }: TiketProps) {
@@ -38,13 +39,16 @@ export default function TiketCard({
       className="flex items-center justify-between gap-4 rounded-lg border border-gray-300 bg-white p-4 pr-3 cursor-pointer hover:bg-gray-50"
       onClick={onCardClick}>
       <div className="flex w-fit shrink-0 flex-col items-center gap-1 min-w-0 flex-1 overflow-hidden">
-        {showDriverId && (
-          <p className="truncate w-full text-[1rem]">
-            운전자: {carpool.driver_id}
+        {showDriverInfo && (
+          <p className="truncate w-full text-sm">운전자: {carpool.driver_id}</p>
+        )}
+        {showDriverInfo && (
+          <p className="truncate w-full text-sm text-neutral-600">
+            연락처: {FormatPhoneNumber(carpool.driver_phone)}
           </p>
         )}
         <p
-          className="w-full m-0 leading-relaxed text-[1rem] text-neutral-800"
+          className="w-full m-0 leading-relaxed text-sm text-neutral-800"
           style={{ fontSize: `clamp(${MIN_FONT_SIZE_REM}rem, 2vw, 0.875rem)` }}>
           <span className="block truncate">
             {carpool.departure ?? ""}
@@ -52,12 +56,12 @@ export default function TiketCard({
           </span>
           <span className="block truncate">{carpool.destination ?? ""}</span>
         </p>
-        <p className="w-full m-0 text-[0.8rem] text-neutral-800 ">
-          {`승객: (${carpool.passengers.length}/${carpool.max_passenger})`}
+        <p className="w-full m-0 text-sm text-neutral-800 ">
+          {`탑승인원: (${carpool.passengers.length}/${carpool.max_passenger})`}
         </p>
       </div>
       <div className="mr-1 flex w-fit shrink-0 flex-col items-center gap-1">
-        <span className="text-[1rem] font-bold text-neutral-900">
+        <span className="text-sm font-bold text-neutral-900">
           {carpool.departureTime
             ? new Date(carpool.departureTime)
                 .toISOString()

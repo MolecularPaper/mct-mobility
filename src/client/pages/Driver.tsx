@@ -2,15 +2,17 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ObjectId } from "mongodb";
 
-import { Button, Input } from "@/components";
-import Modal from "@/components/Modal";
-import { useAuthInfo } from "@/hooks";
-import { getKSTIsoString } from "@/utils/date";
+import { Button, Input } from "@/client/components";
+import Modal from "@/client/components/Modal";
+import { useAuthInfo } from "@/client/hooks";
 
-import TiketCard from "./Tiket";
-import PassengerListModal from "./PassengerListModal";
+import { getKSTIsoString } from "@/utils/date";
+import { FormatNumber, FormatPhoneNumber } from "@/utils/format";
+
+import CarpoolTiket from "./CarpoolTiket";
+import CarpoolInfo from "./CarpoolInfo";
 import homeIcon from "@/assets/home.svg";
-import { Carpool } from "@/db/table";
+import { Carpool } from "@/server/db/table";
 
 export default function DriverList() {
   const { isLoggedIn, userId } = useAuthInfo();
@@ -19,6 +21,7 @@ export default function DriverList() {
   const [destination, setDestination] = useState("");
   const [departureTime, setDepartureTime] = useState(getKSTIsoString());
   const [maxPassenger, setMaxPassenger] = useState(0);
+  const [driverPhone, setDriverPhone] = useState("");
   const [carpoolList, setCarpoolList] = useState(new Array<Carpool>());
   const [selectedCarpool, setSelectedCarpool] = useState<Carpool | null>(null);
 
@@ -31,6 +34,7 @@ export default function DriverList() {
       body: JSON.stringify({
         driverId: userId,
         maxPassenger,
+        driverPhone,
         departure,
         destination,
         departureTime,
@@ -39,6 +43,7 @@ export default function DriverList() {
     });
 
     if (!res.ok) {
+      console.error((await res.json()).error);
       alert("등록할 수 없습니다, 입력값을 확인해주세요!");
       return;
     }
@@ -47,6 +52,7 @@ export default function DriverList() {
     setDestination("");
     setDepartureTime("");
     setMaxPassenger(0);
+    setDriverPhone("");
 
     await getCarpoolList();
   }
@@ -88,8 +94,9 @@ export default function DriverList() {
   return (
     <>
       <Modal active={selectedCarpool !== null}>
-        <PassengerListModal
+        <CarpoolInfo
           driverId={selectedCarpool?.driver_id ?? ""}
+          driverPhone={selectedCarpool?.driver_phone ?? ""}
           departure={selectedCarpool?.departure ?? ""}
           destination={selectedCarpool?.destination ?? ""}
           passengers={selectedCarpool?.passengers ?? []}
@@ -131,9 +138,9 @@ export default function DriverList() {
             className="field-sizing-content flex-1 min-w-auto rounded-lg bg-gray-100 px-3 py-2 text-center text-sm outline-none focus:ring-2 focus:ring-blue-400"
           />
           <Input
-            label="최대 승객"
+            label="탑승 가능 인원"
             labelProps={{
-              className: "ml-1 mr-2 text-[0.8rem]",
+              className: "ml-1 mr-2 w-28 shrink-0 text-[0.8rem]",
             }}
             inputProps={{
               type: "number",
@@ -144,6 +151,20 @@ export default function DriverList() {
                   parseInt(e.target.value.replace(/[^0-9]/g, "")),
                 );
               },
+              className:
+                "flex-1 rounded-lg bg-gray-100 border-none px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-400",
+            }}
+          />
+          <Input
+            label="연락처"
+            labelProps={{
+              className: "ml-1 mr-2 w-28 shrink-0 text-[0.8rem]",
+            }}
+            inputProps={{
+              type: "tel",
+              value: FormatPhoneNumber(driverPhone),
+              placeholder: "010-0000-0000",
+              onChange: (e) => setDriverPhone(FormatNumber(e.target.value)),
               className:
                 "flex-1 rounded-lg bg-gray-100 border-none px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-400",
             }}
@@ -162,7 +183,7 @@ export default function DriverList() {
 
         <div className="flex flex-1 flex-col gap-3 overflow-y-auto">
           {carpoolList.map((carpool) => (
-            <TiketCard
+            <CarpoolTiket
               carpool={carpool}
               buttonText="삭제"
               buttonClassName="bg-red-500"

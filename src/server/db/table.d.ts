@@ -15,6 +15,7 @@ export interface Passenger {
 export interface Carpool {
   _id?: ObjectId;
   driver_id: string; // primary key, ref: User.id
+  driver_phone: string;
   passengers: Passenger[]; // ref: User.id (복수)
   max_passenger: number; // 최대 승객 수
   departure: string;
