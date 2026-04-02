@@ -219,6 +219,9 @@ export default function Taxi() {
           <p className="text-center text-gray-400">예약 내역이 없습니다</p>
         )}
       </div>
+      <div className="px-4 pb-4 text-center text-xs text-gray-500">
+        <p>상승 TAXI는 해당일 근무시간 내 영내 및 상승대 독신숙소에서만 운행됩니다.</p>
+      </div>
     </div>
   );
 }
