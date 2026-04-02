@@ -108,6 +108,13 @@ export default function Taxi() {
     getTaxiList();
   }, [isLoggedIn]);
 
+  useEffect(() => {
+    if (!isLoggedIn) return;
+    const POLLING_INTERVAL_MS = 10_000;
+    const id = setInterval(getTaxiList, POLLING_INTERVAL_MS);
+    return () => clearInterval(id);
+  }, [isLoggedIn]);
+
   return (
     <div className="mx-auto flex h-screen flex-col bg-gray-50">
       <div className="flex flex-row m-6">
@@ -220,7 +227,10 @@ export default function Taxi() {
         )}
       </div>
       <div className="px-4 pb-4 text-center text-xs text-gray-500">
-        <p>상승 TAXI는 해당일 근무시간 내 영내 및 상승대 독신숙소에서만 운행됩니다.</p>
+        <p>
+          상승 TAXI는 해당일 근무시간 내 영내 및 상승대 독신숙소에서만
+          운행됩니다.
+        </p>
       </div>
     </div>
   );
