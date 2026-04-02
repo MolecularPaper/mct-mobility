@@ -43,9 +43,19 @@ export default function Home() {
         <div className="max-h-[30vh] m-4 p-4 justify-center border-2 border-gray-800">
           <img src={baner} className="w-full h-full object-contain" />
         </div>
-        <div className="flex flex-1 m-4 justify-center">
-          <div className="flex flex-1 flex-col gap-4 justify-start">
-            <p className="text-center text-xl underline">카풀 CARPOOL</p>
+        <div className="flex mx-4 justify-center">
+          <div className="flex-1 flex flex-col items-center">
+            <p className="text-center text-xl font-bold">카풀 CARPOOL</p>
+            <div className="w-16 h-0.5 bg-gray-700 mt-1" />
+          </div>
+          <div className="w-1 ml-4 mr-4" />
+          <div className="flex-1 flex flex-col items-center">
+            <p className="text-center text-xl font-bold">상승 TAXI</p>
+            <div className="w-16 h-0.5 bg-gray-700 mt-1" />
+          </div>
+        </div>
+        <div className="flex flex-1 m-4 mt-2 justify-center">
+          <div className="flex flex-1 flex-col gap-4 justify-center items-center">
             <Link
               to="/driver"
               className="flex w-full justify-center cursor-pointer">
@@ -59,7 +69,6 @@ export default function Home() {
           </div>
           <div className="w-1 h-full ml-4 mr-4 bg-gray-700/40" />
           <div className="flex flex-1 flex-col gap-4 justify-center items-center">
-            <p className="text-center text-xl underline">상승 TAXI</p>
             <Link
               to="/taxi"
               className="flex w-full justify-center cursor-pointer">
