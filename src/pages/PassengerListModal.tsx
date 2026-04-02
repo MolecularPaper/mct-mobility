@@ -28,7 +28,7 @@ export default function PassengerListModal({
             경로: {departure} → {destination}
           </p>
           <p>
-            승객 ({passengers.length}/{maxPassenger})
+            탑승인원 ({passengers.length}/{maxPassenger})
           </p>
         </div>
         <ul className="flex flex-col gap-2 max-h-48 overflow-y-auto">
