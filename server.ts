@@ -9,7 +9,6 @@ import authRouter from "./src/server/api/auth.ts";
 import taxiRouter from "./src/server/api/taxi.ts";
 import carpoolRouter from "./src/server/api/carpool.ts";
 import userRouter from "./src/server/api/user.ts";
-import { resolve } from "node:dns";
 
 // Constants
 const isProduction = process.env.NODE_ENV === "production";
