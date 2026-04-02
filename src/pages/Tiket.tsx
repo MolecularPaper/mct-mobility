@@ -39,9 +39,7 @@ export default function TiketCard({
       onClick={onCardClick}>
       <div className="flex w-fit shrink-0 flex-col items-center gap-1 min-w-0 flex-1 overflow-hidden">
         {showDriverId && (
-          <p className="truncate w-full text-sm">
-            운전자: {carpool.driver_id}
-          </p>
+          <p className="truncate w-full text-sm">운전자: {carpool.driver_id}</p>
         )}
         <p
           className="w-full m-0 leading-relaxed text-sm text-neutral-800"
