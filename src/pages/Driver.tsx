@@ -136,7 +136,7 @@ export default function DriverList() {
           <Input
             label="탑승 가능 인원"
             labelProps={{
-              className: "ml-1 mr-2 text-[0.8rem]",
+              className: "ml-1 mr-2 w-28 shrink-0 text-[0.8rem]",
             }}
             inputProps={{
               type: "number",
@@ -154,7 +154,7 @@ export default function DriverList() {
           <Input
             label="연락처"
             labelProps={{
-              className: "ml-1 mr-2 text-[0.8rem]",
+              className: "ml-1 mr-2 w-28 shrink-0 text-[0.8rem]",
             }}
             inputProps={{
               type: "tel",
