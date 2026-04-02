@@ -4,6 +4,7 @@ import { authGuard } from "@/middleware/authGuard";
 import { connectToDatabase } from "@/db/db";
 import { Carpool } from "@/db/table";
 import { getKST } from "@/utils/date";
+import { IsPhoneNumber } from "@/utils/format";
 
 const carpoolRouter = Router();
 
@@ -39,6 +40,13 @@ carpoolRouter.post("/api/carpool", authGuard, async (req, res) => {
 
     if (new Date(departureTime) < getKST()) {
       res.status(400).json({ error: "Departure time must be in the future" });
+      return;
+    }
+
+    if (!IsPhoneNumber(driverPhone)) {
+      res
+        .status(400)
+        .json({ error: "Driver phone number is in an invalid format." });
       return;
     }
 
@@ -91,6 +99,12 @@ carpoolRouter.patch("/api/carpool", authGuard, async (req, res) => {
 
     if (new Date(carpool.departureTime) < getKST()) {
       return res.status(400).json({ error: "Carpool has already departed" });
+    }
+
+    if (!IsPhoneNumber(phoneNumber)) {
+      return res
+        .status(400)
+        .json({ error: "Passenger phone number is in an invalid format." });
     }
 
     if (carpool.driver_id === passengerId) {
