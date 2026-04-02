@@ -11,13 +11,18 @@ const carpoolRouter = Router();
 carpoolRouter.post("/api/carpool", authGuard, async (req, res) => {
   try {
     const { db } = await connectToDatabase();
-    const { driverId, maxPassenger, departure, destination, departureTime } =
+    const { driverId, maxPassenger, driverPhone, departure, destination, departureTime } =
       req.body;
 
     if (!Number.isInteger(maxPassenger) || maxPassenger <= 0) {
       res
         .status(400)
         .json({ error: "The value of `max_passenger` is invalid" });
+      return;
+    }
+
+    if (!driverPhone) {
+      res.status(400).json({ error: "Driver phone is required" });
       return;
     }
 
@@ -33,6 +38,7 @@ carpoolRouter.post("/api/carpool", authGuard, async (req, res) => {
 
     const carpool: Carpool = {
       driver_id: driverId,
+      driver_phone: driverPhone,
       passengers: new Array(),
       max_passenger: maxPassenger,
       departure,

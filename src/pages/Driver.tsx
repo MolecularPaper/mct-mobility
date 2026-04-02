@@ -19,6 +19,7 @@ export default function DriverList() {
   const [destination, setDestination] = useState("");
   const [departureTime, setDepartureTime] = useState(getKSTIsoString());
   const [maxPassenger, setMaxPassenger] = useState(0);
+  const [driverPhone, setDriverPhone] = useState("");
   const [carpoolList, setCarpoolList] = useState(new Array<Carpool>());
   const [selectedCarpool, setSelectedCarpool] = useState<Carpool | null>(null);
 
@@ -31,6 +32,7 @@ export default function DriverList() {
       body: JSON.stringify({
         driverId: userId,
         maxPassenger,
+        driverPhone,
         departure,
         destination,
         departureTime,
@@ -47,6 +49,7 @@ export default function DriverList() {
     setDestination("");
     setDepartureTime("");
     setMaxPassenger(0);
+    setDriverPhone("");
 
     await getCarpoolList();
   }
@@ -144,6 +147,20 @@ export default function DriverList() {
                   parseInt(e.target.value.replace(/[^0-9]/g, "")),
                 );
               },
+              className:
+                "flex-1 rounded-lg bg-gray-100 border-none px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-400",
+            }}
+          />
+          <Input
+            label="연락처"
+            labelProps={{
+              className: "ml-1 mr-2 text-[0.8rem]",
+            }}
+            inputProps={{
+              type: "tel",
+              value: driverPhone,
+              placeholder: "010-0000-0000",
+              onChange: (e) => setDriverPhone(e.target.value),
               className:
                 "flex-1 rounded-lg bg-gray-100 border-none px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-400",
             }}
