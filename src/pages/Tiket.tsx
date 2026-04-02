@@ -39,12 +39,12 @@ export default function TiketCard({
       onClick={onCardClick}>
       <div className="flex w-fit shrink-0 flex-col items-center gap-1 min-w-0 flex-1 overflow-hidden">
         {showDriverId && (
-          <p className="truncate w-full text-[1rem]">
+          <p className="truncate w-full text-sm">
             운전자: {carpool.driver_id}
           </p>
         )}
         <p
-          className="w-full m-0 leading-relaxed text-[1rem] text-neutral-800"
+          className="w-full m-0 leading-relaxed text-sm text-neutral-800"
           style={{ fontSize: `clamp(${MIN_FONT_SIZE_REM}rem, 2vw, 0.875rem)` }}>
           <span className="block truncate">
             {carpool.departure ?? ""}
@@ -52,12 +52,12 @@ export default function TiketCard({
           </span>
           <span className="block truncate">{carpool.destination ?? ""}</span>
         </p>
-        <p className="w-full m-0 text-[0.8rem] text-neutral-800 ">
-          {`승객: (${carpool.passengers.length}/${carpool.max_passenger})`}
+        <p className="w-full m-0 text-sm text-neutral-800 ">
+          {`탑승인원: (${carpool.passengers.length}/${carpool.max_passenger})`}
         </p>
       </div>
       <div className="mr-1 flex w-fit shrink-0 flex-col items-center gap-1">
-        <span className="text-[1rem] font-bold text-neutral-900">
+        <span className="text-sm font-bold text-neutral-900">
           {carpool.departureTime
             ? new Date(carpool.departureTime)
                 .toISOString()

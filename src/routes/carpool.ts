@@ -11,8 +11,14 @@ const carpoolRouter = Router();
 carpoolRouter.post("/api/carpool", authGuard, async (req, res) => {
   try {
     const { db } = await connectToDatabase();
-    const { driverId, maxPassenger, driverPhone, departure, destination, departureTime } =
-      req.body;
+    const {
+      driverId,
+      maxPassenger,
+      driverPhone,
+      departure,
+      destination,
+      departureTime,
+    } = req.body;
 
     if (!Number.isInteger(maxPassenger) || maxPassenger <= 0) {
       res
