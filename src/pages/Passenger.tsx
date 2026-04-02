@@ -140,6 +140,7 @@ function PassengerList() {
       <Modal active={selectedCarpool !== null}>
         <PassengerListModal
           driverId={selectedCarpool?.driver_id ?? ""}
+          driverPhone={selectedCarpool?.driver_phone ?? ""}
           departure={selectedCarpool?.departure ?? ""}
           destination={selectedCarpool?.destination ?? ""}
           passengers={selectedCarpool?.passengers ?? []}

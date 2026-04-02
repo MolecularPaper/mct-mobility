@@ -43,37 +43,35 @@ export default function Home() {
         <div className="max-h-[30vh] m-4 p-4 justify-center border-2 border-gray-800">
           <img src={baner} className="w-full h-full object-contain" />
         </div>
-        <div className="flex mx-4 justify-center">
-          <div className="flex-1 flex flex-col items-center">
-            <p className="text-center text-xl font-bold">카풀 CARPOOL</p>
-            <div className="w-16 h-0.5 bg-gray-700 mt-1" />
+        <div className="flex flex-col flex-1 mx-4 mb-4">
+          <div className="flex">
+            <div className="flex-1 flex justify-center items-center p-2 border-r border-b border-gray-700/40">
+              <p className="text-center text-xl font-bold">카풀 CARPOOL</p>
+            </div>
+            <div className="flex-1 flex justify-center items-center p-2 border-b border-gray-700/40">
+              <p className="text-center text-xl font-bold">상승 TAXI</p>
+            </div>
           </div>
-          <div className="w-1 ml-4 mr-4" />
-          <div className="flex-1 flex flex-col items-center">
-            <p className="text-center text-xl font-bold">상승 TAXI</p>
-            <div className="w-16 h-0.5 bg-gray-700 mt-1" />
-          </div>
-        </div>
-        <div className="flex flex-1 m-4 mt-2 justify-center">
-          <div className="flex flex-1 flex-col gap-4 justify-center items-center">
-            <Link
-              to="/driver"
-              className="flex w-full justify-center cursor-pointer">
-              <img src={driver} alt="운전자" className="w-32 h-32" />
-            </Link>
-            <Link
-              to="/passenger"
-              className="flex w-full justify-center cursor-pointer">
-              <img src={passenger} alt="승객" className="w-32 h-32" />
-            </Link>
-          </div>
-          <div className="w-1 h-full ml-4 mr-4 bg-gray-700/40" />
-          <div className="flex flex-1 flex-col gap-4 justify-center items-center">
-            <Link
-              to="/taxi"
-              className="flex w-full justify-center cursor-pointer">
-              <img src={taxi} alt="택시" className="w-32 h-32" />
-            </Link>
+          <div className="flex flex-1">
+            <div className="flex-1 flex flex-col gap-4 justify-center items-center p-4 border-r border-gray-700/40">
+              <Link
+                to="/driver"
+                className="flex w-full justify-center cursor-pointer">
+                <img src={driver} alt="운전자" className="w-32 h-32" />
+              </Link>
+              <Link
+                to="/passenger"
+                className="flex w-full justify-center cursor-pointer">
+                <img src={passenger} alt="승객" className="w-32 h-32" />
+              </Link>
+            </div>
+            <div className="flex-1 flex flex-col gap-4 justify-center items-center p-4">
+              <Link
+                to="/taxi"
+                className="flex w-full justify-center cursor-pointer">
+                <img src={taxi} alt="택시" className="w-32 h-32" />
+              </Link>
+            </div>
           </div>
         </div>
       </div>
