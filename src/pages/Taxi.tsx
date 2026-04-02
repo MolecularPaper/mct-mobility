@@ -77,8 +77,8 @@ export default function Taxi() {
     });
 
     if (!res.ok) {
-      alert("등록할 수 없습니다, 입력값을 확인해주세요!");
-      console.error((await res.json()).error);
+      const data = await res.json();
+      alert(data.error ?? "등록할 수 없습니다, 입력값을 확인해주세요!");
       return;
     }
 
@@ -231,6 +231,7 @@ export default function Taxi() {
           상승 TAXI는 해당일 근무시간 내 영내 및 상승대 독신숙소에서만
           운행됩니다.
         </p>
+        <p>상승 TAXI는 15분 간격으로 운행됩니다.</p>
       </div>
     </div>
   );
