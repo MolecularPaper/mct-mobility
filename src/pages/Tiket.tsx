@@ -41,6 +41,11 @@ export default function TiketCard({
         {showDriverId && (
           <p className="truncate w-full text-sm">운전자: {carpool.driver_id}</p>
         )}
+        {carpool.driver_phone && (
+          <p className="truncate w-full text-sm text-neutral-600">
+            연락처: {carpool.driver_phone}
+          </p>
+        )}
         <p
           className="w-full m-0 leading-relaxed text-sm text-neutral-800"
           style={{ fontSize: `clamp(${MIN_FONT_SIZE_REM}rem, 2vw, 0.875rem)` }}>
