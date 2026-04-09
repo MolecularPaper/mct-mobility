@@ -156,7 +156,9 @@ function PassengerList() {
               type="text"
               placeholder="연락받을 전화번호를 입력해주세요"
               value={FormatPhoneNumber(phoneNumber)}
-              onChange={(e) => setPhoneNumber(FormatNumber(e.target.value))}
+              onChange={(e) =>
+                setPhoneNumber(FormatNumber(e.target.value).substring(0, 11))
+              }
               className="w-full rounded-lg bg-gray-100 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-400"
             />
             <div className="flex w-full mt-4 gap-2">

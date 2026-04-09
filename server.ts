@@ -4,6 +4,8 @@ import express from "express";
 import { Transform } from "node:stream";
 import cookieParser from "cookie-parser";
 
+import { startScheduler } from "./src/server/services/scheduler.ts";
+import { logCaptureMiddleware } from "./src/server/middleware/logCapture.ts";
 import authRouter from "./src/server/api/auth.ts";
 import taxiRouter from "./src/server/api/taxi.ts";
 import carpoolRouter from "./src/server/api/carpool.ts";
@@ -20,7 +22,8 @@ const templateHtml = isProduction
   ? await fs.readFile("./dist/client/index.html", "utf-8")
   : "";
 
-// Create http server
+// Start scheduler
+await startScheduler();
 const app = express();
 
 // Add Vite or respective production middlewares
@@ -43,6 +46,7 @@ if (!isProduction) {
 }
 
 app.use(express.json());
+app.use(logCaptureMiddleware);
 app.use(cookieParser());
 app.use(authRouter);
 app.use(userRouter);
@@ -117,3 +121,6 @@ app.use("*all", async (req, res) => {
 app.listen(port, () => {
   console.log(`Server started at http://localhost:${port}`);
 });
+function getAgenda() {
+  throw new Error("Function not implemented.");
+}

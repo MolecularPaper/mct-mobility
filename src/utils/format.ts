@@ -1,11 +1,10 @@
 // Number
-const numberRegex = /[^0-9]/g;
 export function FormatNumber(value: string) {
   return value.replace(/[^0-9]/g, "");
 }
 
 export function IsNumber(value: string) {
-  return numberRegex.test(value);
+  return /^\d+$/.test(value);
 }
 
 // Phone Number

@@ -101,12 +101,6 @@ carpoolRouter.patch("/api/carpool", authGuard, async (req, res) => {
       return res.status(400).json({ error: "Carpool has already departed" });
     }
 
-    if (!IsPhoneNumber(phoneNumber)) {
-      return res
-        .status(400)
-        .json({ error: "Passenger phone number is in an invalid format." });
-    }
-
     if (carpool.driver_id === passengerId) {
       return res.status(400).json({ error: "Driver cannot join as passenger" });
     }
@@ -129,6 +123,12 @@ carpoolRouter.patch("/api/carpool", authGuard, async (req, res) => {
       return res
         .status(200)
         .json({ success: true, modifiedCount: result.modifiedCount });
+    }
+
+    if (!IsPhoneNumber(phoneNumber)) {
+      return res
+        .status(400)
+        .json({ error: "Passenger phone number is in an invalid format." });
     }
 
     if (carpool.passengers.length >= carpool.max_passenger) {

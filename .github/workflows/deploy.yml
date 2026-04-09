@@ -18,4 +18,5 @@ jobs:
           port: 22
           script: |
             cd ~/mct-mobility
+            git fetch --all --prune
             ./deploy.sh

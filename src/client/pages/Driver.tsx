@@ -164,7 +164,8 @@ export default function DriverList() {
               type: "tel",
               value: FormatPhoneNumber(driverPhone),
               placeholder: "010-0000-0000",
-              onChange: (e) => setDriverPhone(FormatNumber(e.target.value)),
+              onChange: (e) =>
+                setDriverPhone(FormatNumber(e.target.value).substring(0, 11)),
               className:
                 "flex-1 rounded-lg bg-gray-100 border-none px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-400",
             }}
@@ -182,8 +183,9 @@ export default function DriverList() {
         </div>
 
         <div className="flex flex-1 flex-col gap-3 overflow-y-auto">
-          {carpoolList.map((carpool) => (
+          {carpoolList.map((carpool, index) => (
             <CarpoolTiket
+              key={index}
               carpool={carpool}
               buttonText="삭제"
               buttonClassName="bg-red-500"
