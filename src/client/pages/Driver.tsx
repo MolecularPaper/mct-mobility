@@ -183,8 +183,9 @@ export default function DriverList() {
         </div>
 
         <div className="flex flex-1 flex-col gap-3 overflow-y-auto">
-          {carpoolList.map((carpool) => (
+          {carpoolList.map((carpool, index) => (
             <CarpoolTiket
+              key={index}
               carpool={carpool}
               buttonText="삭제"
               buttonClassName="bg-red-500"
