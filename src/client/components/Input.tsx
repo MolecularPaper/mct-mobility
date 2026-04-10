@@ -17,7 +17,7 @@ export default function Input({
     <div
       {...rest}
       className={twMerge(
-        "flex flex-row justify-center items-center",
+        "flex flex-row items-center min-w-0",
         rest?.className,
       )}>
       {label && (
@@ -28,7 +28,7 @@ export default function Input({
       <input
         {...inputProps}
         className={twMerge(
-          "bg-transparent border border-transparent border-b-black",
+          "min-w-0 bg-transparent border border-transparent border-b-black",
           inputProps?.className,
         )}></input>
     </div>

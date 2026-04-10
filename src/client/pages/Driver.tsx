@@ -104,12 +104,12 @@ export default function DriverList() {
           onClose={() => setSelectedCarpool(null)}
         />
       </Modal>
-      <div className="mx-auto flex h-dvh flex-col gap-6 p-6 bg-gray-50">
+      <div className="mx-auto flex h-dvh w-full flex-col gap-6 overflow-x-hidden p-6 bg-gray-50">
         <div className="flex flex-row">
           <h1 className="text-2xl font-black text-neutral-900 flex-1">
             함께 타고 가요
           </h1>
-          <Link to="/" className="w-[32] h-[32] mr-6">
+          <Link to="/" className="size-8 mr-6">
             <img className="w-full h-full" src={homeIcon} alt="홈 버튼" />
           </Link>
         </div>
@@ -135,7 +135,7 @@ export default function DriverList() {
             value={departureTime}
             min={getKSTIsoString()}
             onChange={(e) => setDepartureTime(e.target.value)}
-            className="field-sizing-content flex-1 min-w-auto rounded-lg bg-gray-100 px-3 py-2 text-center text-sm outline-none focus:ring-2 focus:ring-blue-400"
+            className="field-sizing-content flex-1 min-w-0 rounded-lg bg-gray-100 px-3 py-2 text-center text-sm outline-none focus:ring-2 focus:ring-blue-400"
           />
           <Input
             label="탑승 가능 인원"
