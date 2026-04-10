@@ -85,7 +85,7 @@ export default function TaxiReservation() {
   }
 
   return (
-    <div className="mx-auto flex h-screen flex-col bg-gray-50">
+    <div className="mx-auto flex h-dvh flex-col bg-gray-50">
       <div className="flex flex-row m-6">
         <h1 className="text-2xl font-black text-neutral-900 flex-1">
           예약 관리

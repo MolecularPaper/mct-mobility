@@ -104,7 +104,7 @@ export default function DriverList() {
           onClose={() => setSelectedCarpool(null)}
         />
       </Modal>
-      <div className="mx-auto flex h-screen flex-col gap-6 p-6 bg-gray-50">
+      <div className="mx-auto flex h-dvh flex-col gap-6 p-6 bg-gray-50">
         <div className="flex flex-row">
           <h1 className="text-2xl font-black text-neutral-900 flex-1">
             함께 타고 가요

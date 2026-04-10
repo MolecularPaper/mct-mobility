@@ -150,7 +150,7 @@ function PassengerList() {
         />
       </Modal>
       <Modal active={formModalActive}>
-        <div className="w-screen h-screen flex justify-center items-center">
+        <div className="w-dvw h-dvh flex justify-center items-center">
           <div className="w-96 h-fit bg-white flex flex-col p-8 justify-center items-center rounded-xl shadow-md">
             <input
               type="text"
@@ -179,7 +179,7 @@ function PassengerList() {
           </div>
         </div>
       </Modal>
-      <div className="mx-auto flex h-screen flex-col gap-6 p-6 bg-gray-50">
+      <div className="mx-auto flex h-dvh flex-col gap-6 p-6 bg-gray-50">
         <div className="flex flex-row">
           <h1 className="text-2xl font-black text-neutral-900 flex-1">
             여기로 가요

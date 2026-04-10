@@ -18,7 +18,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex flex-col h-screen overflow-y-auto">
+      <div className="flex flex-col h-dvh overflow-y-auto">
         <div className="w-full p-4 flex justify-center items-center bg-blue-300">
           <div className="flex-1">
             <span
@@ -40,7 +40,7 @@ export default function Home() {
             </Button>
           </div>
         </div>
-        <div className="max-h-[30vh] m-4 p-4 justify-center border-2 border-gray-800">
+        <div className="max-h-[30dvh] m-4 p-4 justify-center border-2 border-gray-800">
           <img src={baner} className="w-full h-full object-contain" />
         </div>
         <div className="flex flex-col flex-1 mx-4 mb-4">
