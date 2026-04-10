@@ -17,7 +17,7 @@ export default function Modal({
     <div
       {...rest}
       className={twMerge(
-        "fixed w-screen h-screen bg-black/30 z-50",
+        "fixed inset-0 bg-black/30 z-50",
         className,
       )}>
       {children}

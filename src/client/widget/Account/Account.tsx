@@ -13,7 +13,7 @@ export default function Account() {
   const [activeLoginPage, setActiveLoginPage] = useState(true);
 
   return (
-    <div className="relative w-screen h-screen flex flex-col justify-center items-center bg-gray-50">
+    <div className="relative w-dvw h-dvh flex flex-col justify-center items-center bg-gray-50">
       <div
         className="absolute inset-0 opacity-50 bg-contain bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${baner})` }}
